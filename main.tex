@@ -21,8 +21,24 @@
 \pagestyle{empty}
 \author{Andreas Lorer}
 
+\chardef\_=`_
+
 \graphicspath{{images/}
 }\setlength{\parindent}{0ex}
+
+% https://tex.stackexchange.com/questions/16765/biblatex-author-year-square-brackets
+\newrobustcmd*{\parentexttrack}[1]{%
+  \begingroup
+  \blx@blxinit
+  \blx@setsfcodes
+  \blx@bibopenparen#1\blx@bibcloseparen
+  \endgroup}
+
+\AtEveryCite{%
+  \let\parentext=\parentexttrack%
+  \let\bibopenparen=\bibopenbracket%
+  \let\bibcloseparen=\bibclosebracket}
+
 
 \definecolor{materialGrey}{rgb}{0.27,0.27,0.27}
 \definecolor{materialGreen}{rgb}{0.0, 0.8, 0.6}
@@ -117,10 +133,12 @@
   \renewcommand{\headrulewidth}{0.4pt}
   \renewcommand{\footrulewidth}{0.4pt}
 
+  \input{sections/introduction.tex}
+  \input{sections/related_work.tex}
+  \input{sections/basics.tex}
   \input{affidavit.tex}
-  \input{sections/section.tex}
 	\pagebreak
-
+  
 	\printbibliography
 
 \end{document}

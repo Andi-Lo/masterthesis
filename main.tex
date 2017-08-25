@@ -1,7 +1,7 @@
-\documentclass[a4paper,12pt,singlespacing]{article}
-\usepackage[left=2.5cm,right=2.5cm,top=2.5cm]{geometry}
+\documentclass[12pt,a4paper,onehalfspacing,oneside,ngerman]{article}
+\usepackage[left=4cm,right=1.5cm,top=2.5cm]{geometry}
 \usepackage[hyphens]{url}
-\usepackage[backend=biber,style=alphabetic,backref=true,citecounter=true,citestyle=authoryear]{biblatex}
+\usepackage[backend=biber,style=numeric,backref=true,citecounter=true,citestyle=numeric]{biblatex}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{csquotes}
@@ -17,6 +17,8 @@
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{fancyhdr}
+\usepackage{mathtools}
+\usepackage{amsfonts}
 \addbibresource{cites.bib}
 \pagestyle{empty}
 \author{Andreas Lorer}
@@ -27,17 +29,17 @@
 }\setlength{\parindent}{0ex}
 
 % https://tex.stackexchange.com/questions/16765/biblatex-author-year-square-brackets
-\newrobustcmd*{\parentexttrack}[1]{%
-  \begingroup
-  \blx@blxinit
-  \blx@setsfcodes
-  \blx@bibopenparen#1\blx@bibcloseparen
-  \endgroup}
+% \newrobustcmd*{\parentexttrack}[1]{%
+%   \begingroup
+%   \blx@blxinit
+%   \blx@setsfcodes
+%   \blx@bibopenparen#1\blx@bibcloseparen
+%   \endgroup}
 
-\AtEveryCite{%
-  \let\parentext=\parentexttrack%
-  \let\bibopenparen=\bibopenbracket%
-  \let\bibcloseparen=\bibclosebracket}
+% \AtEveryCite{%
+%   \let\parentext=\parentexttrack%
+%   \let\bibopenparen=\bibopenbracket%
+%   \let\bibcloseparen=\bibclosebracket}
 
 
 \definecolor{materialGrey}{rgb}{0.27,0.27,0.27}
@@ -117,9 +119,11 @@
     {9}{{{\color{materialYellow}9}}}1
 }
 	%Coversheet
-  \newcommand{\headline}{Real-Time Traffic Map Visualization}
-  \newcommand{\subheadline}{Subtitle}
+  % Former: Real-Time Transit Map Visualization
+  \newcommand{\headline}{GTFS Live Vehicle Position Map}
+  \newcommand{\subheadline}{}
 	\input{coversheet/coversheet.tex}
+  \input{sections/abstract.tex}
 
 	%Table of contents
   \thispagestyle{empty}
@@ -127,15 +131,17 @@
   \clearpage
   \pagestyle{fancy}
   \fancyhf{}
-  % \rhead{}
-  \lhead{Subtitle}
+  \rhead{}
+  \lhead{\leftmark}
   \rfoot{\thepage}
   \renewcommand{\headrulewidth}{0.4pt}
-  \renewcommand{\footrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0pt}
 
   \input{sections/introduction.tex}
-  \input{sections/related_work.tex}
   \input{sections/basics.tex}
+  \input{sections/related_work.tex}
+  \input{sections/problem.tex}
+  \input{sections/implementation/implementation.tex}
   \input{affidavit.tex}
 	\pagebreak
   

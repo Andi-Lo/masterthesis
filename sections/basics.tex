@@ -1,18 +1,53 @@
-%!TEX root = ../main.tex
-
 \begin{newpage}
 	
 	\section{Grundlagen}
 	\label{sec:Grundlagen}
 
-	\subsection{Das GTFS Datenformat}
-	\label{ssec:das_gtfs_datenformat}
+  \subsection{Begriffe}
+  \label{sub:begriffe}
+    Nachfolgend sollen die wichtigsten Begriffe definiert werden, um ein Einheitliches Verständnis zu garantieren.
+
+    \subsubsection{Vehicle}
+    \label{ssub:vehicle}
+      Ein Vehicle $V$ beschreibt in dieser Arbeit ein Fahrzeug, welches im Dienste der öffentlichen Verkehrsbeförderung steht. Beispielsweise Bus, U- \& S-Bahn, Interrail Züge aber auch Zahnradbahn oder gar Funicular-Services\footnote{\url{https://en.wikipedia.org/wiki/Funicular}}. Das private Automobil fällt folglich nicht unter diese Definition.
+    % subsubsection vehicle (end)
+
+    \subsubsection{Station}
+    \label{ssub:station}
+      Eine Station $S$ ist eine Haltestelle, die von einem Vehicle $V$ angefahren werden kann.
+    % subsubsection station (end)
+
+    \subsubsection{Trip}
+    \label{ssub:trip}
+      In dieser Arbeit wird immer wieder der Begriff "`Trip"' Verwendung finden. Ein Trip $T$ sei mit folgenden Eigenschaften definiert:
+      \begin{itemize}
+        \item $T = \{s_1, \dotsc, s_n \;|\; s \in S, n \in \mathbb{N}, n \geq 2 \}$
+        \item Ein Trip $T$ wird dabei von genau einem Vehicle $V$ bedient. Daraus folgt $T$ mit dem Mapping: $T \mapsto V$ ist Injektiv\footnote{Ein Trip wird von genau einem Vehicle ausgeführt} zu $V$. 
+        \item Die Bewältigung der Strecke $\{A,B \;|\; A, B \in S\}$ gilt als ein einziger Trip.
+        \item Der Rückweg $\{B, A \ni T \;|\; A, B \in S\}$ ist nicht in einem Trip $T$ enthalten, sondern würde als ein neuer Trip erfasst werden.
+      \end{itemize}
+      
+    % subsubsection trip (end)
+
+    \subsubsection{Route}
+    \label{ssub:route}
+      Eine Route $R$ besteht aus einer Anzahl an Trips $T$.
+      \begin{itemize}
+        \item $R = \{ t_1, \dotsc, t_n \;|\; t \in T, n \in \mathbb{N}, n \geq 1 \}$
+        \item $R$ mit dem Mapping: $R \mapsto T$ ist Surjektiv\footnote{Eine Route kann mehrere Trips besitzen, wohingegen ein Trip nur zu einer Route zugehörig sein kann} 
+      \end{itemize}
+    % subsubsection route (end)
+
+  % subsection begriffe (end)
+
+	\subsection{GTFS Datenformat}
+	\label{ssec:gtfs_datenformat}
 		Das GTFS (General Transit Feed Specification) ist eine Datenstandardisierung die von Google im Jahr 2006 entwickelt wurde. Vor dessen Einführung gab es weder eine einheitliche Standardisierung, noch ein "`de facto Standard"' für die Fahrpläne des Öffentlichen Nahverkehrs in den USA. GTFS ermöglichte es Transit Organisationen ihre Daten für dritte zu öffnen und ist heute das weit verbreitetste offene Datenformat für den öffentlichen Nahverkehr.\parencite[S. 2]{roush}\\
 
     Ein GTFS Feed besteht aus mindestens 6 und maximal 13 \texttt{csv-Dateien}, die im \texttt{.txt} Format vorliegen müssen. Die Struktur eines Feeds lässt sich in Worten wie folgt beschreiben:
 
     \begin{quote}
-      \textit{Ein GTFS Feed besteht aus einer oder mehreren Routen. Jede Route (\texttt{routes.txt}) hat einen oder mehrere Trips (\texttt{trips.txt}). Jeder Trip besucht eine Abfolge von Stops (\texttt{stops.txt}) zu einer bestimmten Zeit (\texttt{stop\_times.txt}). Trips und Stop-Zeit beinhalten nur die Tageszeit Informationen. Der Kalender (calendar.txt und \texttt{calendar\_dates.txt}) bestimmt dann, an welchen Tagen ein bestimmter Trip stattfindet.} \parencite[S. 8]{zervaas}
+      \textit{Ein GTFS Feed besteht aus einer oder mehreren Routen. Jede Route (\texttt{routes.txt}) hat einen oder mehrere Trips (\texttt{trips.txt}). Jeder Trip besucht eine Abfolge von Stops (\texttt{stops.txt}) zu einer bestimmten Zeit (\texttt{stop\_times.txt}). Trips und Stop-Zeit beinhalten nur die Tageszeit Informationen. Der Kalender (calendar.txt und \texttt{calendar\_dates.txt}) bestimmt dann, an welchen Tagen ein bestimmter Trip stattfindet.} \cite[S. 8]{zervaas}
     \end{quote}
 
 		Vor allem für digitale Produkte, wie zum Beispiel Trip-Planer, die viele verschiedene Fahrpläne von unterschiedlichen Unternehmen in ihren Service integrieren müssen, ist ein standardisiertes Datenformat unbedingt notwendig. 
@@ -35,9 +70,7 @@
       \hline
     \end{longtable}
 
-    % Die fehlende/nicht gegebene Übereinstimmung beim Gebrauch der Variablen führt als zu Problemen bei der ...
-
-    "`Blue Line"' ist dabei die Bezeichnung der U-Bahnlinie\parencite{wiki_blue_line}. Wir sehen also, dass Stuttgart-VVS die \texttt{route\_id} zur eindeutigen Identifizierung mittels Zahlenwert verwendet wohingegen Boston-MBTA dieses Feld nutzt, um den Namen der Linie zu beschreiben. Angenommen wir verwenden die \texttt{route\_id} in einer Benutzeroberfläche wie in Abbildung ~\ref{fig:gtfs_differences}.
+    "`Blue Line"' ist dabei die Bezeichnung der U-Bahnlinie\parencite{wiki_blue_line}. Wir sehen also, dass Stuttgart-VVS die \texttt{route\_id} zur eindeutigen Identifizierung mittels Zahlenwert verwendet wohingegen Boston-MBTA dieses Feld nutzt, um den Namen der Linie zu beschreiben. Angenommen wir verwenden die \texttt{route\_id} in einer Benutzeroberfläche wie in Abbildung~\ref{fig:gtfs_differences}.
 
     \begin{figure}[htbp]
       \begin{center}
@@ -48,6 +81,17 @@
     \end{figure}
 
     Links in der Abbildung ist die Korrekte Bezeichnung der Route zu sehen nämlich "Blue Line", wohingegen rechts nur eine numerische ID zu sehen ist, die nicht für den Nutzer vorgesehen und damit falsch ist. Damit die rechte Seite korrekt wäre müsste dort \texttt{U1} abgebildet sein. Die fehlende beziehungsweise nicht gegebene Übereinstimmung der beiden Feeds führt also zu Problemen bei der Darstellung die auch durch die Verwendung eines anderen Feldes wie zum Beispiel \texttt{route\_short\_name} nicht behoben werden können.\\
+
+    Um sich den Inhalt einer GTFS-Datei besser vorstellen zu können ist nachfolgend ist ein Auszug der \texttt{stops.txt} Tabelle abgebildet.
+
+    \begin{lstlisting}[captionpos=b, caption=Auszug der ersten Zeilen von \texttt{stops.txt}, label=lst:gtfs-auszug]
+      stop_id,stop_name,stop_lat,stop_lon
+      668,Moetzingen Bruehlstrasse,48.53249,8.775416
+      2840,Ludwigsburg Mainzer Allee,48.9018,9.21601
+      6409,Burgholzhof,48.81742,9.191285
+      6824,Neuenhaus Groerach,48.62443,9.213599
+      152,Jux,49.030426,9.438538
+    \end{lstlisting}
 
 		Da das GTFS-Format das grundlegende Datenformat für diese Arbeit ist, sollen nachfolgend kurz die wichtigsten Tabellen beschrieben werden.
 
@@ -67,8 +111,7 @@
 			\item \texttt{shapes.txt}: Jeder Trip kann eine dazugehörigen Polyline\footnote{Linienverlauf} haben. Eine Polyline ist dabei nichts anderes als eine Abfolge von Punkten, die, wenn man sie verbindet, eine Linie ergeben. Um einen Routenverlauf auf eine Karte zu zeichnen, wird diese Tabelle folglich unbedingt benötigt. 
 		\end{itemize}
 
-	\section{Existierende Projekte}
-	\label{sec:existierende_projekte}
+  Ein UML-Diagramm, welches die in relation stehenden Datien aufzeigt, existiert unter folgender Adresse: \url{https://developers.google.com/transit/gtfs/reference/} 
 
 \end{newpage}
 % section grundlagen

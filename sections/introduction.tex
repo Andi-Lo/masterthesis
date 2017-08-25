@@ -1,10 +1,18 @@
-%!TEX root = ../main.tex
-
 \begin{newpage}
 	
 	\section{Einleitung}
 		
 	\label{sec:Einleitung}
+	 %  Data can be rather complex. To understand complex systems we have different approaches in our professions. In software development we have tools like "Divide and Conquer" to help us break things into smaller pieces. But what if that does not help us understanding the fundamental underlying principles. Bret Victor describes in his essay "Up and Down the Ladder of Abstraction" a more visual approach for finding a profound insight into complex systems: 
+
+	 %  \begin{quote}
+		% 	\emph{"`When designing [a system], the challenge lies not in constructing the system, but in understanding it. In the absence of theory, we must develop an intuition to guide our decisions. The design process is thus one of exploration and discovery."'} \parencite{victor}
+		% \end{quote}
+
+	 %  Data is often coupled to each other. Separating it into smaller junks can alter its meaning, because the context could get lost or changed. Often times interesting datasets are described interesting especially because they have relations that tell a story. Thats why data visualization got so popular in this decade. We searched for new exciting ways of exploring data and tell untold stories. Especially on maps we are seeing all kinds of neat visualizations, giving data a geospatial context. Ranging from demographic health coverage, crime rates, earthquake data for different regions to a live aircraft flight radar.
+
+		% Visualizations help us to understand complex topics in a more consumable way. They enable us to explore data, exposing twists and secrets that otherwise might have been left buried in that huge pile that data often times is.\\
+
 		Datenvisualisierung ist ein Thema, das nicht nur in jüngster Zeit sehr viel Zuwendung fand, sondern auch zur Analyse von Sachverhalten immer wichtiger wird. So lassen sich komplexe Zusammenhänge eines Systems, oftmals erst dann richtig begreifen, wenn wir alle möglichen Zustände davon erfassen können. In "`Up and Down the Ladder of Abstraction"', beschreibt Bret Victor wie sich Systeme in ihrer Ganzheit besser begreifen und gestalten lassen.
 
 		\begin{quote}
@@ -13,37 +21,29 @@
 
 		Auch eine Ansammlung an Daten ist erst einmal sehr abstrakt. In einer Datenbank in Relation gebracht, bleiben die meisten Erkenntnisse und Stories verborgen. Ein tieferes Verständnis, begreifen wir erst dann, wenn wir sie auswerten. Die Art der Datenvisualisierung hat sich in den letzten Jahren stark gewandelt. Während anfangs vor allem Daten in der Form von Häufigkeitsanalysen ausgewertet und als Bar- oder Linechart visualisiert wurden, haben wir heute interaktive Karten um geospartiale Zusammenhänge zu veranschaulichen.
 
-		Diesen Trend von dynamischen Visualisierungen nahmen auch verschiedene namhafte Verkehrsunternehmen auf und wir sahen eine Reihe von Live Karten online gehen. So schuf Beispielsweise die Deutsche Bahn den Zugradar\footnote{\url{http://bahn.de/zugradar}} oder München\footnote{\url{http://s-bahn-muenchen.hafas.de/}} eine Karte für ihr S-Bahn Netz. Während sich diese Visualisierungen weitestgehend nur auf die eigenen verfügbaren Daten stützen, schlossen sie eine gesamte Erfassung des öffentlichen Verkehrs aus. 2014 ging Tracker Geops\footnote{\url{http://tracker.geops.de/}} online um diese Lücke zu schließen und bietet mit über 650 integrierten Fahrplänen eine große Abdeckung. Zusätzlich sei noch LiveMap24 \footnote{\url{https://www.livemap24.com/}} von Verdict erwähnt. Auch eine Live Karte, deren Veröffentlichungsdatum mir allerdings nicht bekannt ist.
+		Diesen Trend von dynamischen Visualisierungen nahmen auch verschiedene namhafte Verkehrsunternehmen auf und wir sahen eine Reihe von Live Karten ans Netz gehen. Zum Beispiel der Fligt-Radar\footnote{\url{https://www.flightradar24.com/}} für Flugzeuge, Marinetraffic-Map\footnote{\url{https://www.marinetraffic.com/}} in der Schifffahrt oder auch für die Live Simulation von Wetterdaten\footnote{\url{https://mapbox.github.io/webgl-wind/demo/}}. 
 
-		Der Vorteil einer Digitalen Karte besteht in seiner ständigen Aktualität. So kann ein statischer Fahrplan keine Informationen zu Störungen, Verspätungen oder Ausfall eines Zuges geben. Auf einer Live Karte lassen sich solche Informationen visuell aufbereiten und dem Anwender vermitteln.
-		Auf einer Live Karte lassen sich solche Informationen verarbeiten, auswerten und schließlich für den Anwender individuell bündeln. Der Betrachter kann sehen wie viele Fahrzeuge gerade aktiv sind und kann zusätzlich zum statischen Fahrplan auch visuell erleben wo sich sein Zug oder Bus befindet. Dadurch werden Verspätungen einen visuellen Kontext gegeben. \emph{"`Der Zug hat 5 Minuten Verspätung"'} ist dadurch nicht mehr nur eine Aussage, sondern sie erhält eine Visualisierung die sie erfahrbar macht.
-    Für eine Live Karte kommen aber nicht nur Pendler oder Reisende als Nutzer in Frage sondern auch Verkehrsunternehmen oder auch Städte.
-    Es lässt sich simulieren welche Frequenz ein Verkehrsnetz aufweist und zu welcher Zeit es besonders aktiv bzw. inaktiv ist. 
-		Dadurch lassen sich Erkenntnisse gewinnen, die durch diese Form der Visualisierung Einblicke ermöglichen, die durch eine gedruckte 2D Karte in dieser Art, nicht möglich gewesen währen.\\
+		Auch regional gibt es verschiedene Produkte die veröffentlicht wurden. Beispielsweise der Zugradar\footnote{\url{http://bahn.de/zugradar}} (2014) und der Busradar\footnote{\url{https://play.google.com/store/apps/details?id=de.hafas.android.dbbusradar}} der Deutschen Bahn oder eine Karte für das S-Bahn Netz in München\footnote{\url{http://s-bahn-muenchen.hafas.de/}} (2009).
+
+		Eine gesamte Erfassung des öffentlichen Verkehrs ging ebenfalls 2014 mit Travic\footnote{\url{http://tracker.geops.de/}}\label{travic} online und bietet mit über 650 integrierten Fahrplänen eine enorme Abdeckung. Da die Live Karten der Deutschen Bahn damals nur die Visualisierung der eigenen Bus und Bahnlinien ermöglichte, war Travic darin bestrebt diese Lücke zu schließen und den gesamten öffentlichen Verkehr darzustellen. 
+		Zusätzlich sei noch LiveMap24 \footnote{\url{https://www.livemap24.com/}} von Verdict erwähnt. Auch eine Live Karte, deren Veröffentlichungsdatum mir allerdings nicht bekannt ist.
+
+		Der Vorteil einer Digitalen Karte besteht in seiner ständigen Aktualität. Ein statischer Fahrplan kann keine Informationen zu Störungen, Verspätungen oder Ausfall eines Zuges geben. Auf einer Live Karte lassen sich solche Informationen visuell aufbereiten und dem Anwender über die Benutzeroberfläche vermitteln. Der Betrachter kann sehen wie viele Fahrzeuge gerade aktiv sind und kann zusätzlich zum statischen Fahrplan auch visuell erleben wo sich sein Zug oder Bus befindet. 
+		Da gleichzeitig Fahrplan als auch Karte vorhanden sind, ist auch eine geographische Orientierung möglich. \emph{"`Der Zug hat 5 Minuten Verspätung"'} wird ein visueller Kontext gegeben und ist dadurch nicht mehr nur eine Aussage, sondern erfahrbar.
+    Einen Nutzen in einer Live Karte sehen aber nicht nur Pendler oder Reisende, sondern auch Verkehrsunternehmen, Städte oder Verkehrsforscher.\\
+		
+		%Durch die erstell... lassen sich Erkenntnisse gewinnen, die durch diese Form der Visualisierung Einblicke ermöglichen, die durch eine gedruckte 2D Karte in dieser Art, nicht möglich gewesen währen.\\
 
 		Diese Arbeit befasst sich umfassend mit der Entwicklung einer Live Karte für den öffentlichen Nahverkehr anhand von GTFS Daten. Der Fokus liegt dabei in der Gestaltung von verschiedenen Visualisierungen, welche die User Experience erhöhen und die Karte nicht nur interaktiv, sondern vor allem auch dem Benutzer Freude bei der Bedienung bereitet.
-		
-		Das verwenden von einer Postgresql Datenbank und der Abfrage von GTFS-Daten stellt dabei eine große Herausforderung dar.
 
 		% Aufzählen der eigenen Features der Karte. Was für Sachen wurden entworfen etc.
 
+		% Aufzählen was in den einzelnen Kapiteln noch alles behandelt wird.
+
+		% MOTIVATION (Recherche für Moovel um .... (was soll diese Arbeit herausfinden))
+
 		% Abstract: https://www.researchgate.net/publication/224581089_ICE_-_Visual_analytics_for_transportation_incident_datasets
 
-
-		% \begin{itemize}
-		% 	\item Why this topic has its place
-		% 	\item Exploration of visualization methods
-		% 	\item Finding way of visualizing abstract schedule data into a more readable way
-		% 	\item Static timetables provide no information of the current state of a transit network
-		% 	\item What is the current state of the art
-		% 	\item Show and discuss different visualization approaches
-		% 	\item Scope of the thesis (minimal requirements?)
-		% 	\item Explain why my work is different and what makes it unique (twist)
-		% 	\item My work wants to epxlore various pathes of visalization posibilities and discuss the pros + cons. We rather want to play with the data instead of providing a production ready product.
-		% 	\item overview of whats the content of each section
-		% \end{itemize}
 	% section einleitung
-	
-	% section eigene_leistung (end)
 
 \end{newpage}

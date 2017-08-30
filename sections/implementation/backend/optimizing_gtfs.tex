@@ -1,32 +1,25 @@
-\subsubsection{GTFS optimieren}
-\label{ssub:gtfs_optimieren}
-  In diesem Abschnitt soll erklärt werden, welche Schritte nötig waren, um eine schnelle Abfrage von GTFS Daten in einer Postgresql Datenbank zu ermöglichen.\\
-
-  Das GTFS Format hat den Nachteil, dass es eine sehr hohe komplexität aufweißt, sobald Daten aus verschiedenen Tabellen benötigt werden. Eine Datenbankabfrage wie: \textit{"`Gib uns alle Trips die in einer Zeitspanne zwischen $t_a$ und $t_b$ liegen"'} führt zu einer Situation, in der verschiedenste Tabellen mittels SQL \texttt{JOIN} miteinander verknüpft werden müssen. Solche Verknüpfungen sind besonders dann Zeitintensiv, wenn eine große Menge an Daten in den jeweiligen Tabellen verarbeitet werden muss.
-
-  Bei einem \texttt{JOIN} werden die einzelnen Reihen zweier Tabellen (TabelleA und TabelleB) über die JOIN-Bedingung miteinander Verknüpft. Das resultat ist eine neue Ergebnistabelle mit den kombinierten Reihen aus beiden Tabellen. Vor allem ein \texttt{INNER-JOIN} kann erhebliche Performance-Probleme bereiten:
-
-  \begin{quote}
-    \textit{"`Conversely, an inner join can result in disastrously slow performance or even a server crash when used in a large volume query in combination with database functions in an SQL Where clause."'}\parencite{wikipedia_sql_join}
-  \end{quote} 
-
-  die Abfrage bis zu \~20 Sekunden benötigt.
-
-  % Use explain analyze on old queries to better make a statement about performance issues: https://robots.thoughtbot.com/postgresql-performance-considerations
+\subsubsection{GTFS Optimierungen}
+\label{ssub:gtfs_optimierungen}
   
-  Dies ist für eine Anwendung natürlich nicht tragbar und es mussten Wege gefunden werden, die Abfragzeiten erheblich zu verringern.\\
+  Ein Schritt um die Performance zu verbessern, stellt die Optimierung von GTFS Feeds dar. Zum Teil lässt sich die Datenmenge bereits vor dem Importieren in die Datenbank, erheblich verringern. Ein sehr gutes Tool um dies zu erreichen ist \texttt{gtfstidy} \url{https://github.com/patrickbr/gtfstidy}.\\
 
-  Ein Schritt in diese Richtung ist die Optimierung der GTFS Daten, bevor diese in Abschnitt~\ref{sub:daten_importieren} in die Datenbank geladen werden.
-
-  The GTFS format has the draw back of increased complexity as soon as you need data from different tables.
-
-  To ask the database for "provide all trips that lay inside of a given timeframe" yielded a situation where query times reached above ~20 seconds.
-
-  For the query to execute you need several expensive joins of database tables. This forced the action of improving database performance by applying different optimizations. The graphics shows what kind of tables I would need for a complete query that gives me everything that I would need for doing a vehicle simulation on a map:
+  Der Kommandozeilenbefehl \colorbox{materialGrey}{\texttt{\color{white}{\$ gtfstidy -sSiRDeO input.zip output}}} optimiert das Suttgart-VVS Feed wie folgt:
 
   \begin{itemize}
-    \item Warum gtfs optimierung sinn macht
-    \item Stuttgart-VVS feed IDs 
-    \item GTFStidy verwenden -> ergebnisse aufzeigen?
+    \item -s Vereinfacht die Polyline % show douglas peucker simplification 
+    
+    \item -S shape duplicate remover
+
+    \item Umwandlung von Zeichen ID's (String) in Zahlen ID's (Integer) % why does this matter?
+
+    \item -O Feed is checked for entries that are not referenced anywhere. These entries are removed from the output.
+
+    \item -R route duplicate remover
+
+    \item -e If optional field values of feed entries have errors, this processors sets them to the default values specified in the GTFS standard.
+
+    \item -D drop erroneous entries from feed
+
   \end{itemize}
-% subsubsection gtfs_optimieren (end)
+
+% subsubsection gtfs_optimierungen (end)

@@ -1,0 +1,17 @@
+\subsection{Backend}
+\label{sub:backend}
+  Da der GTFS Standard eine fertige relationale Beziehung der einzelnen Dateien festlegt, ist der Einsatz einer relationalen Datenbank sehr naheliegend. Dabei gibt es eine breite Palette an Auswahl. Damit die Anwendung möglichst Zugänglich bleibt, liegt der Fokus auf Datenbanken die unter einer Open-source Lizenz kostenfrei zur Verfügung stehen. Die zwei populärsten sind MySQL und PostgreSQL\parencite{db_engines}. Beide haben ihre Vor- und Nachteile und die Entscheidung ist mehr eine persönliche Präferenz, als ein großer Vorteil des Einen über den Anderen. Einen kleinen Vorteil bietet PostgreSQL's Unterstützung für Array-Types, welche sehr hilfreich beim speichern und abfragen von Daten ist. Ansonsten ist dieses Projekt auch mit MySQL realisierbar.\\
+
+  In diesem Abschnitt soll beschrieben werden, welche Probleme beim Arbeiten mit dem GTFS Datenformat und einer PostgreSQL Datenbank bestehen und wie diese gelöst wurden. Dabei steht vor allem die Behebung von Engpässen bei der Query\footnotemark Performance, als auch die Verringerung der zu verarbeitenden Datenmenge.
+
+  \footnotetext{Ein Query ist eine Informationsanfrage an eine Datenbank} 
+  
+  % Gliederung eventuell nochmals beschreiben.
+
+  \input{sections/implementation/backend/gtfs_problems_and_challenges.tex}
+  \input{sections/implementation/backend/optimizing_gtfs.tex}
+  \input{sections/implementation/backend/creating_database.tex}
+  \input{sections/implementation/backend/importing_into_database.tex}
+  \input{sections/implementation/backend/normalizing_the_database.tex}
+  \input{sections/implementation/backend/configuration.tex}
+% subsection backend (end)

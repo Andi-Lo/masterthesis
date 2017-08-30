@@ -14,16 +14,29 @@
 
     \subsubsection{Station}
     \label{ssub:station}
-      Eine Station $S$ ist eine Haltestelle, die von einem Vehicle $V$ angefahren werden kann.
+      Eine Station $S$ ist eine Haltestelle, die von einem Vehicle $V$ während eines Trips $T$ angefahren wird. Die Station definiert dabei die Ankunfts- und Abfahrtszeiten, wann ein Vehicle an dieser Station haltet und wann es diese zur weiterfahrt wieder verlässt. Ankunfts- und Abfahrtszeit seien wie folgt definiert:\\
+
+      arrival time $ := t_{ari}$\\
+      departure time $ := t_{dep}$
+
     % subsubsection station (end)
+
+    \subsubsection{Polyline}
+    \label{ssub:polyline}
+      Eine Polyline $P$ ist eine Kurve die sich durch eine Sequenz an Punkten $p_1, \dotsc, p_n$ definiert.
+
+    % subsubsection polyline (end)
 
     \subsubsection{Trip}
     \label{ssub:trip}
       In dieser Arbeit wird immer wieder der Begriff "`Trip"' Verwendung finden. Ein Trip $T$ sei mit folgenden Eigenschaften definiert:
       \begin{itemize}
         \item $T = \{s_1, \dotsc, s_n \;|\; s \in S, n \in \mathbb{N}, n \geq 2 \}$
+
         \item Ein Trip $T$ wird dabei von genau einem Vehicle $V$ bedient. Daraus folgt $T$ mit dem Mapping: $T \mapsto V$ ist Injektiv\footnote{Ein Trip wird von genau einem Vehicle ausgeführt} zu $V$. 
-        \item Die Bewältigung der Strecke $\{A,B \;|\; A, B \in S\}$ gilt als ein einziger Trip.
+
+        \item Die Bewältigung der Strecke $\{A,B \;|\; A, B \in S\}$ gilt als ein einziger Trip. Ein Trip beginnt also genau dann, wenn die momentane Zeit $t_{cur}$ mit der Abfahrtszeit $t_{dep}$ übereinstimmen $\Rightarrow t_{cur} = t_{dep} $ .
+
         \item Der Rückweg $\{B, A \ni T \;|\; A, B \in S\}$ ist nicht in einem Trip $T$ enthalten, sondern würde als ein neuer Trip erfasst werden.
       \end{itemize}
       
@@ -34,6 +47,7 @@
       Eine Route $R$ besteht aus einer Anzahl an Trips $T$.
       \begin{itemize}
         \item $R = \{ t_1, \dotsc, t_n \;|\; t \in T, n \in \mathbb{N}, n \geq 1 \}$
+
         \item $R$ mit dem Mapping: $R \mapsto T$ ist Surjektiv\footnote{Eine Route kann mehrere Trips besitzen, wohingegen ein Trip nur zu einer Route zugehörig sein kann} 
       \end{itemize}
     % subsubsection route (end)
@@ -80,7 +94,7 @@
       \end{center}
     \end{figure}
 
-    Links in der Abbildung ist die Korrekte Bezeichnung der Route zu sehen nämlich "Blue Line", wohingegen rechts nur eine numerische ID zu sehen ist, die nicht für den Nutzer vorgesehen und damit falsch ist. Damit die rechte Seite korrekt wäre müsste dort \texttt{U1} abgebildet sein. Die fehlende beziehungsweise nicht gegebene Übereinstimmung der beiden Feeds führt also zu Problemen bei der Darstellung die auch durch die Verwendung eines anderen Feldes wie zum Beispiel \texttt{route\_short\_name} nicht behoben werden können.\\
+    Links in der Abbildung ist die Korrekte Bezeichnung der Route zu sehen nämlich \texttt{Blue Line}, wohingegen rechts nur eine numerische ID zu sehen ist, die nicht für den Nutzer vorgesehen und damit falsch ist. Damit die rechte Seite korrekt wäre müsste dort \texttt{U1} abgebildet sein. Die fehlende beziehungsweise nicht gegebene Übereinstimmung der beiden Feeds führt also zu Problemen bei der Darstellung die auch durch die Verwendung eines anderen Feldes wie zum Beispiel \texttt{route\_short\_name} nicht behoben werden können.\\
 
     Um sich den Inhalt einer GTFS-Datei besser vorstellen zu können ist nachfolgend ist ein Auszug der \texttt{stops.txt} Tabelle abgebildet.
 

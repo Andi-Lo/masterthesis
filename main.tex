@@ -1,5 +1,5 @@
 \documentclass[12pt,a4paper,onehalfspacing,oneside,ngerman]{article}
-\usepackage[left=4cm,right=1.5cm,top=2.5cm]{geometry}
+\usepackage[left=4cm,right=1.5cm,top=2.5cm,headheight=15pt]{geometry}
 \usepackage[hyphens]{url}
 \usepackage[backend=biber,style=numeric,backref=true,citecounter=true,citestyle=numeric]{biblatex}
 \usepackage[utf8]{inputenc}
@@ -120,7 +120,7 @@
 }
 	%Coversheet
   % Former: Real-Time Transit Map Visualization
-  \newcommand{\headline}{GTFS Live Vehicle Position Map}
+  \newcommand{\headline}{GTFS Live Vehicle Position \\ Map Visualization}
   \newcommand{\subheadline}{}
 	\input{coversheet/coversheet.tex}
   \input{sections/abstract.tex}
@@ -143,8 +143,9 @@
   \input{sections/problem.tex}
   \input{sections/implementation/implementation.tex}
   \input{affidavit.tex}
-	\pagebreak
   
 	\printbibliography
+
+  \input{sections/appendix.tex}
 
 \end{document}

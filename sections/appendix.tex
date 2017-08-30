@@ -1,0 +1,120 @@
+\begin{newpage}
+\section*{Anhang}
+
+\begin{lstlisting}[captionpos=t, caption=Postgresql Datenbankabfrage von allen aktiven Trips mit ihrem dazugehörigen Linienverlauf, label=lst:get_active_trips_query, language=SQL]
+SELECT 
+  array_to_json(ARRAY_AGG(array[stop_lat, stop_lon])) AS stops_coords,
+  array_to_json(ARRAY_AGG(array[
+    CAST ( stops.stop_id AS TEXT ),
+    CAST ( stop_times.stop_sequence AS TEXT ),
+    stops.stop_name, 
+    stop_times.departure_time,
+    CAST ( stop_times.departure_time_seconds AS TEXT ),
+    stop_times.arrival_time,
+    CAST ( stop_times.arrival_time_seconds AS TEXT )
+  ] ORDER BY stop_times.stop_sequence)) AS stops_object,
+  routes.route_short_name,
+  routes.route_long_name,
+  routes.route_type,
+  routes.route_color,
+  routes.route_text_color,
+  trips.trip_id, 
+  trips.route_id,
+  trips.direction_id,
+  frequency.start_time, 
+  frequency.end_time, 
+  frequency.start_time_seconds,
+  frequency.end_time_seconds,
+  frequency.headway_secs AS frequency_seconds,
+  calendar.start_date,
+  calendar.end_date,
+  agencies.agency_timezone,
+  agencies.agency_id,
+  agencies.agency_name,
+  array_to_json(ARRAY_AGG(array[shape_pt_lat, shape_pt_lon] 
+    ORDER BY shape_pt_sequence ASC)) AS shape_coords
+FROM gtfs_stop_times AS stop_times
+
+INNER JOIN gtfs_trips AS trips
+  ON trips.trip_id = stop_times.trip_id 
+  AND trips.agency_key = stop_times.agency_key
+    
+INNER JOIN gtfs_routes AS routes
+  ON routes.route_id = trips.route_id 
+  AND routes.agency_key = trips.agency_key
+   
+INNER JOIN gtfs_agency AS agencies
+  ON agencies.agency_id = routes.agency_id 
+  AND agencies.agency_key = routes.agency_key
+
+INNER JOIN gtfs_stops AS stops 
+  ON stops.stop_id = stop_times.stop_id
+  AND stops.agency_key = stop_times.agency_key
+  AND NOT EXISTS (
+    SELECT 0
+    FROM denormalized_max_stop_sequence AS max
+    WHERE max.agency_key = stop_times.agency_key
+    AND max.trip_id = stop_times.trip_id
+    AND max.trip_max = stop_times.stop_sequence
+  )
+
+LEFT JOIN gtfs_calendar_dates AS calendar_dates
+  ON calendar_dates.service_id = trips.service_id
+  AND calendar_dates.agency_key = trips.agency_key
+  AND date = '2017-05-10' 
+  AND calendar_dates.exception_type = 1
+
+LEFT JOIN gtfs_calendar AS calendar 
+  ON trips.service_id = calendar.service_id
+  AND calendar.agency_key = trips.agency_key
+  AND calendar.thursday = 1
+  AND '2017-05-10' BETWEEN calendar.start_date 
+  AND calendar.end_date OR calendar_dates.date IS NOT NULL
+  AND calendar.start_date <= '2017-05-10'
+  AND calendar.end_date >= '2017-05-10'
+
+LEFT JOIN gtfs_frequencies AS frequency
+  ON frequency.trip_id = trips.trip_id
+  AND frequency.agency_key = trips.agency_key
+    
+LEFT JOIN gtfs_shapes AS shapes
+  ON trips.shape_id = shapes.shape_id
+  AND trips.agency_key = shapes.agency_key
+
+WHERE (
+  frequency.start_time_seconds >= 25200 
+  AND frequency.end_time_seconds <= 90000
+  AND shapes.shape_id IS NOT NULL
+  AND '2017-05-10' BETWEEN calendar.start_date 
+  AND calendar.end_date OR calendar_dates.date IS NOT NULL
+) 
+AND NOT EXISTS (
+  SELECT 0
+  FROM gtfs_calendar_dates AS date_exceptions
+  WHERE date = '2017-05-10'
+  AND date_exceptions.agency_key = trips.agency_key
+  AND date_exceptions.service_id = trips.service_id
+  AND exception_type = 2
+)
+GROUP BY 
+  routes.route_short_name,
+  routes.route_long_name,
+  routes.route_type,
+  routes.route_color,
+  routes.route_text_color,
+  trips.trip_id, 
+  trips.route_id,
+  trips.direction_id,
+  frequency.start_time, 
+  frequency.end_time, 
+  frequency.start_time_seconds,
+  frequency.end_time_seconds,
+  frequency_seconds,
+  calendar.start_date,
+  calendar.end_date,
+  agencies.agency_timezone,
+  agencies.agency_id,
+  agencies.agency_name
+\end{lstlisting}
+      
+\end{newpage}

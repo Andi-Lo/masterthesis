@@ -1,25 +1,43 @@
 \subsubsection{GTFS Optimierungen}
 \label{ssub:gtfs_optimierungen}
+
+  Der erste Schritt um die Performance zu verbessern, ist die Optimierung von GTFS Feeds. Damit lässt sich die Datenmenge bereits vor dem Importieren in die Datenbank, erheblich verringern. Ein Tool um ein GTFS Feed umfassend zu optimieren ist \texttt{gtfstidy} \url{https://github.com/patrickbr/gtfstidy}. Es bietet dabei allerdings nicht nur die Möglichkeit für die Vereinfachung von Polylines sondern kommt mit einer ganzen Reihe an Optimierungsmöglichkeiten. 
+
+  Der Kommandozeilenbefehl \colorbox{materialGrey}{\texttt{\color{white}{\$ gtfstidy -sSiRDeO input.zip output}}} optimiert das Stuttgart-VVS Feed wie folgt:
   
-  Ein Schritt um die Performance zu verbessern, stellt die Optimierung von GTFS Feeds dar. Zum Teil lässt sich die Datenmenge bereits vor dem Importieren in die Datenbank, erheblich verringern. Ein sehr gutes Tool um dies zu erreichen ist \texttt{gtfstidy} \url{https://github.com/patrickbr/gtfstidy}.\\
+  \begin{itemize}[label={}]
+    \item \textbf{-s} Reduziert die Punktanzahl einer Polyline
+      
+    \item \textbf{-S} Entfernt redundante Polylines.
 
-  Der Kommandozeilenbefehl \colorbox{materialGrey}{\texttt{\color{white}{\$ gtfstidy -sSiRDeO input.zip output}}} optimiert das Suttgart-VVS Feed wie folgt:
+    \item \textbf{-i} Umwandlung von Zeichen ID's (String) in Zahlen ID's (Integer).\footnote{Aus der String ID \texttt{'1.T0.10-1-j17-1.16.H'} wird \texttt{78}}
 
-  \begin{itemize}
-    \item -s Vereinfacht die Polyline % show douglas peucker simplification 
-    
-    \item -S shape duplicate remover
+    \item \textbf{-O} Entfernt Feed Einträge die nicht referenziert werden.
 
-    \item Umwandlung von Zeichen ID's (String) in Zahlen ID's (Integer) % why does this matter?
+    \item \textbf{-R} Entfernt doppelt vorhandene Routen.
 
-    \item -O Feed is checked for entries that are not referenced anywhere. These entries are removed from the output.
+    \item \textbf{-e} Setzt fehlerhafte oder optionale Felder auf einen Standard Wert.
 
-    \item -R route duplicate remover
-
-    \item -e If optional field values of feed entries have errors, this processors sets them to the default values specified in the GTFS standard.
-
-    \item -D drop erroneous entries from feed
-
+    \item \textbf{-D} Entfernt fehlerhafte Einträge aus dem Feed.
   \end{itemize}
+
+  Durch Verwendung von gtfstidy konnte das Feed optimiert werden und die Datengröße der einzelnen Dateien um folgendes Maß verringert werden.
+
+  \begin{longtable}{|>{\raggedright \arraybackslash}p{5.0cm}|>{\raggedright \arraybackslash}p{5.0cm}|>{\raggedright \arraybackslash}p{5.0cm}|}
+    \hline
+    Dateiname & Größe davor& Größe danach\\
+    \hline
+    trips.txt & 6 MB & 2.8 MB\\
+    stop\_times.txt & 103 MB & 53 MB\\
+    stops.txt & 651 KB & 355 KB\\
+    shapes.txt & 77.3 MB & 22.4 MB\\
+    routes.txt & 54 KB & 38 KB\\
+    calendar\_dates.txt & 557 KB & 463 KB\\
+    \hline
+    \caption{Tabellengröße bevor und nach anwenden von gtfstidy}
+    \label{tbl:gtfs_tidy_results}
+  \end{longtable}
+
+  Insgesamt konnte so die Größe des Feeds von 79 MB auf 118 MB um knapp 50\% verringert werden. Vor allem die Umwandlung von langen String ID's in kürzere Integer ID's trägt maßgeblich zur Verringerung der Dateigröße bei.
 
 % subsubsection gtfs_optimierungen (end)

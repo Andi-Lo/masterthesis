@@ -36,6 +36,7 @@
 ### Optimieren von GTFS
 * gtfstidy -> simplify shapes, integer ids, etc
 
+
 ### Aufsetzen der Datenbank
 * Init.sh
 

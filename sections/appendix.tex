@@ -116,5 +116,46 @@ GROUP BY
   agencies.agency_id,
   agencies.agency_name
 \end{lstlisting}
+
+
+\begin{lstlisting}[captionpos=t, caption=Erstellen einer denormalized\_shapes Tabelle, label=lst:sql_aggregate_shape, language=SQL]
+-- first we creat the new database table
+CREATE TABLE denormalized_shapes (
+  agency_key text,
+  shape_id INTEGER,
+  shape_coords json,
+  shape_dist_traveled double precision[]
+);
+
+-- generating indexes
+CREATE INDEX denormalized_shapes_unique_index 
+  ON denormalized_shapes (agency_key, shape_id);
+
+-- insert the shape data into new table
+INSERT INTO denormalized_shapes
+SELECT
+  agency_key,
+  shape_id,
+  shape_coords,
+  shape_dist_traveled
+FROM (
+  SELECT
+    shapes.agency_key,
+    shapes.shape_id,
+    array_to_json(ARRAY_AGG(array[shape_pt_lon, shape_pt_lat]
+      ORDER BY shape_pt_sequence ASC))
+      AS shape_coords,
+    ARRAY_AGG(shape_dist_traveled
+      ORDER BY shape_pt_sequence ASC)
+      AS shape_dist_traveled
+
+  FROM gtfs_shapes AS shapes
+
+  GROUP BY
+    shapes.agency_key,
+    shapes.shape_id
+) as shp;
+\end{lstlisting}
+  
       
 \end{newpage}

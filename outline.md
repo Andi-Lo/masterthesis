@@ -37,12 +37,6 @@
 * gtfstidy -> simplify shapes, integer ids, etc
 
 
-### Aufsetzen der Datenbank
-* Init.sh
-
-### Importieren in die Datenbank
-* Import.sh
-
 ### Database optimization for GTFS format (normalization)
 
 ### Finetune the Database for GIS queries
@@ -54,7 +48,6 @@
 ### Building an API for GTFS
 * Database queries
 * Endpoints
-* Input validation
 
 ## Frontend
 * Abschnitt / Gliederung des Abschnitts aufgreifen und erklären

@@ -18,6 +18,7 @@
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{fancyhdr}
+\usepackage{nameref}
 \usepackage{enumitem}
 \usepackage{mathtools}
 \usepackage{amsfonts}
@@ -79,10 +80,10 @@
 
 % code listing support for javascript language
 \lstdefinelanguage{JavaScript}{
-  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, length},
+  keywords={typeof, let, const, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, length},
   keywordstyle=\color{materialBlue}\bfseries,
-  ndkeywords={class, export, boolean, throw, implements, import, this},
-  ndkeywordstyle=\color{darkgray}\bfseries,
+  ndkeywords={class, export, exports, module, require, implements, import, this, bearing, destination, distance, featureCollection, featureEach, getCoords, lineString, lineIntersect, lineDistance, point, rbush, knn, load, push},
+  ndkeywordstyle=\color{materialGreen}\bfseries,
   identifierstyle=\color{black},
   sensitive=false,
   comment=[l]{//},
@@ -95,7 +96,7 @@
 
 \lstset{
    language=JavaScript,
-   backgroundcolor=\color{lightgray},
+   backgroundcolor=\color{white},
    extendedchars=true,
    basicstyle=\footnotesize\ttfamily,
    showstringspaces=false,

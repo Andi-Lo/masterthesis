@@ -1,9 +1,69 @@
 \subsubsection{API Endpunkte}
 \label{ssub:api_endpunkte}
-  \begin{itemize}
-    \item What are API Endpoints?
-    \item Which ones are needed and what are they for
-    \item List Endpoints
-  \end{itemize}
+  Um einen Datenaustausch zwischen Server und Client zu ermöglichen, sind folgende API\footnotemark Endpunkte vorhanden. 
+
+  \footnotetext{Application Programming Interface}
+
+  \begin{itemize}[label={}]
+    \item \textbf{/daily} Stellt die Daten für das Zeitstrahldiagramm bereit. Wird beim Start der Anwendung einmalig Angefragt. Die Antwort enthält XY-Wertpaare. X stellt dabei die Zeit in Sekunden und Y die zu diesem Zeitwert aktiv werdenden Trips dar.
+
+\begin{lstlisting}[captionpos=t, caption=Antwort des Servers zur Anfrage \texttt{/daily}, label=lst:daily_response]
+[
+  {"x":86340,"y":"6"},
+  {"x":86400,"y":"10"}, 
+  ...
+]
+\end{lstlisting}
+
+    \item \textbf{/trips/:from,:to} Ermöglicht das Abfragen von Trips, die in einer Zeitspanne \texttt{from - to} aktiv sind. Beim initialen Aufruf der Webanwendung wird dieser Endpunkt als erstes angefragt um die aktiven Trips innerhalb einer Stunde zu bekommen. Der gewählte Zeitraum ist in Sekunden anzugeben. Die Definition ist wie folgt: $t_{from} = now$ und $t_{to} = now + 600 sec$. Die Sekunden lassen sich durch das Addieren der Stunden, Minuten und Sekunden errechnen. Bsp: 17:04:59 Uhr
+
+    Stunden $*$ 3600 $+$ Minuten $*$ 60 $+$ Sekunden\\
+    $\Rightarrow$ $17 * 3600 + 4 * 60 + 59 = 61499$\\
+    $\Rightarrow t_{from} = 61499 \Rightarrow t_{to} = 61499 + 600\;sec$ $\Rightarrow$ \texttt{/trips/61499,62099}
+
+    Die Antwort des Servers auf einen Endpunkt vom Typ \texttt{/trips/} ist ein Objekt mit der Trip\_Id, dessen Inhalt der \texttt{GeoJSON} spezifikation nach RFC 7946 folgt:
+
+\begin{lstlisting}[captionpos=t, caption=Trip Objekt, label=lst:trip_object]
+{
+  2498: {  
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "shape",
+          ...
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [[9.4437,48.64482], ...]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "station"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [9.443688, 48.6448]
+        }
+      },
+      ...
+    ]
+  }
+}
+\end{lstlisting}
   
+    Da die Antwort in Listing \ref{lst:trip_object} mittels "`..."' gekürzt ist, sind detailiertere Antworten im \nameref{sec:anhang} unter Listing \ref{lst:geojson_featurecollection}, \ref{lst:shape_feature} und \ref{lst:station_feature} zu finden.
+  
+
+    \item \textbf{/trips/:id} Antwortet mit den zur ID gehörenden Trip Informationen. Dieser Endpunkt ermöglicht es, Informationen für nur einen einzigen Trip zu bekommen. Dies ist vor allem dann hilfreich, wenn der Nutzer ein Vehilce anklickt und Informationen über diesen Trip angezeigt bekommen möchte. Beispiel: \texttt{/trips/51295}
+
+    \item \textbf{/trips/new/:from,:to,:tripIds} Stellt die Abfrage für neue Trips zur Verfügung und exkludiert dabei diejenigen Trips, die in \texttt{:tripIds} genannt sind. Damit wird verhindert, dass bereits auf der Karte vorhandene Trips nicht doppelt auftauchen können. Dieser Query wird in einem 60 Sekunden Intervall vom Client an den Server gesendet um die neusten Trips zu erhalten. Damit wird die Karte aktuell gehalten. Beispiel: Es ist 10:00 Uhr, hole die in der nächsten Minute aktiv werdenden Trips (Zeitraum 10:00 bis 10:01 Uhr) und schließe die Trips mit der ID \texttt{51295,9212,52} vom Ergebnis aus \texttt{/trips/new/36000,36060,51295,9212,52}.
+
+    \item \textbf{/trips/new/:from,:to} Stellt die gleiche Funktionalität wie der vorherige Endpunkt zur Verfügung, mit der Ausnahme, dass keine Trip-ID's übermittelt werden müssen. Dieser Endpunkt ist beispielsweise dafür da, falls die Karte leer ist und noch keine aktiven Trips enthält.
+
+  \end{itemize}
+
 % subsubsection api_endpunkte (end)

@@ -1,5 +1,6 @@
 \begin{newpage}
-\section*{Anhang}
+\section{Anhang}
+\label{sec:anhang}
 
 \begin{lstlisting}[captionpos=t, caption=Postgresql Datenbankabfrage von allen aktiven Trips mit ihrem dazugehörigen Linienverlauf, label=lst:get_active_trips_query, language=SQL]
 SELECT 
@@ -156,6 +157,342 @@ FROM (
     shapes.shape_id
 ) as shp;
 \end{lstlisting}
+
+\begin{lstlisting}[captionpos=t, caption=Erstellen der denormalized\_shapes Tabelle, label=lst:denormalized_shapes, language=SQL]
+-- create denormalized_trips table
+CREATE TABLE denormalized_trips (
+  stops_coords json NOT NULL,
+  stops_object json NOT NULL,
+  stops_dist_traveled json,
+  agency_key TEXT NOT NULL,
+  trip_id INTEGER NOT NULL,
+  route_id INTEGER NOT NULL,
+  service_id INTEGER NOT NULL,
+  shape_id INTEGER,
+  trip_start_time INTEGER NOT NULL,
+  trip_end_time INTEGER NOT NULL,
+  direction_id INTEGER,
+  route_color TEXT,
+  route_long_name TEXT,
+  route_short_name TEXT,
+  route_desc TEXT,
+  route_type INTEGER
+);
+-- create indexes
+CREATE INDEX denormalized_trips_index 
+  ON denormalized_trips (agency_key, trip_id, route_id, shape_id);
+-- now query the data and insert it into the newly created table
+INSERT INTO denormalized_trips
+SELECT
+  stops_coords,
+  stops_object,
+  agency_key,
+  trip_id,
+  route_id,
+  service_id,
+  shape_id,
+  trip_start_time,
+  trip_end_time,
+  route_color,
+  route_long_name,
+  route_short_name,
+  route_desc,
+  route_type
+FROM (
+  SELECT
+    array_to_json(ARRAY_AGG(array[stop_lat, stop_lon]
+      ORDER BY stop_times.stop_sequence::int)) AS stops_coords,
+    array_to_json(ARRAY_AGG(array[
+        stops.stop_id,
+        CAST ( stop_times.stop_sequence AS TEXT ),
+        stops.stop_name,
+        stop_times.departure_time,
+        CAST ( stop_times.departure_time_seconds AS TEXT ),
+        stop_times.arrival_time,
+        CAST ( stop_times.arrival_time_seconds AS TEXT )
+    ] ORDER BY stop_times.stop_sequence::int)) AS stops_object,
+    trips.agency_key,
+    trips.trip_id,
+    trips.route_id,
+    trips.service_id,
+    trips.shape_id,
+    min(stop_times.arrival_time_seconds) as trip_start_time,
+    max(stop_times.departure_time_seconds) as trip_end_time,
+    routes.route_color,
+    routes.route_long_name,
+    routes.route_short_name,
+    routes.route_desc,
+    routes.route_type
+  FROM gtfs_stop_times AS stop_times
+
+  INNER JOIN gtfs_trips AS trips
+    ON trips.trip_id = stop_times.trip_id
+    AND trips.agency_key = stop_times.agency_key
+
+  INNER JOIN gtfs_routes AS routes
+    ON trips.agency_key = routes.agency_key
+    AND routes.route_id = trips.route_id
+
+  INNER JOIN gtfs_stops AS stops
+    ON stops.stop_id = stop_times.stop_id
+    AND stops.agency_key = stop_times.agency_key
+
+  GROUP BY
+    trips.agency_key,
+    trips.trip_id,
+    trips.route_id,
+    trips.service_id,
+    trips.shape_id,
+    routes.route_color,
+    routes.route_long_name,
+    routes.route_short_name,
+    routes.route_desc,
+    routes.route_type
+) as trps;
+\end{lstlisting}
+
+\begin{lstlisting}[captionpos=t, caption=Abfrage von Trips und dessen Polyline in einer Zeitspanne XY zu einem gegebenen Datum Z, label=lst:query_trips, language=SQL]
+SELECT
+  trips.stops_coords,
+  trips.stops_object,
+  trips.stops_dist_traveled,
+  shapes.shape_coords,
+  trips.route_id,
+  trips.shape_id,
+  trips.trip_id,
+  trips.route_color,
+  trips.route_desc,
+  trips.route_type,
+  trips.route_long_name,
+  trips.route_short_name,
+  trips.trip_start_time,
+  trips.trip_end_time
+FROM denormalized_trips AS trips
+
+INNER JOIN gtfs_calendar_dates AS calendar_dates
+ON calendar_dates.service_id = trips.service_id
+AND calendar_dates.agency_key = trips.agency_key
+AND date = 'YYYY-MM-DD'
+AND exception_type = 1
+
+-- GTFS STUTTGART-VVS does not make use of the calendar, 
+-- if you want to process other feeds aswell you might need
+-- to join this table too
+--LEFT JOIN gtfs_calendar AS calendar
+--  ON trips.service_id = calendar.service_id
+--  AND calendar.agency_key = trips.agency_key
+--  AND calendar.$date = 1
+
+LEFT JOIN denormalized_shapes AS shapes
+  ON trips.shape_id = shapes.shape_id
+  AND trips.agency_key = shapes.agency_key
+
+WHERE (
+  trip_start_time BETWEEN XY AND XY
+  AND shapes.shape_coords IS NOT NULL
+)
+--AND (
+--  'YYYY-MM-DD' BETWEEN calendar.start_date AND calendar.end_date
+--  OR calendar_dates.date IS NOT NULL
+--)
+AND NOT EXISTS (
+  SELECT 0
+  FROM gtfs_calendar_dates AS date_exceptions
+  WHERE date = 'YYYY-MM-DD'
+  AND date_exceptions.agency_key = trips.agency_key
+  AND date_exceptions.service_id = trips.service_id
+  AND exception_type = 2
+)
+\end{lstlisting}
   
+
+\begin{lstlisting}[captionpos=t, caption=Geojson FeatureCollection als Antwort zu \texttt{/trips/:from,:to}, label=lst:geojson_featurecollection]
+{
+  2498: {
+    "type": "FeatureCollection",
+    "features": [24]
+  },
+  1925: {
+    "type": "FeatureCollection",
+    "features": [7]
+  },
+  ...
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[captionpos=t, caption=Shape Feature, label=lst:shape_feature,texcl=true, language=JavaScript, literate={ö}{{\"o}}1]
+"features": [
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "shape",
+      "route_color": "#FF0000",
+      "route_type": 700,
+      "trip_id": 8784,
+      "route_short_name": "701",
+      "route_long_name": "Sindelf. Eichholz - ZOB - Böbl. ZOB - Diezenhalde",
+      "trip_start": 55560,
+      "trip_end": 57780,
+      "route_type_color": "#f44336",
+      "polyline": "kswv@}x`jH_@f@}@?c@UiJ{AQHiBeAqDcCl@yAjAoB|@iAjBsC^cAOi@yCsA
+      _FgAq@MuB@_@YkAa@}A]cDgAUM_FLoa@qBcHq@T{@eCqD_EoDoNiJoJwIaGuHaDqGaCmM?cF|
+      @kFvLoSxDaFlG{EpAkA\mAFcBf@q@vA_CO_B[
+      m@DiB^eANgAG}APuAbAeARYRm@HyA@}ISyBEiAKsGDsCf]aBmBgP]
+      iDDiBNsAtBs@~GiBrAm@tCyEzCqCdDyB~FmC|AWhEY|R]
+      rHAxKDnFAdMFvc@lE~JtA|Ex@bD`@vKrBnG~@nDRdBDfONj]z@jKlA`DNvC@zGS|E_@`Dg@zF
+      sAxHqAlCa@rDKzIB|FLM\?f@|Fv@dBvC|@\d@s@H_CjCPjA@pKLHqBF_GD_@"
+    },
+    "geometry": {
+      "type": "LineString",
+      "coordinates": []
+    }
+  }
+]  
+\end{lstlisting}
+
+\begin{lstlisting}[captionpos=t, caption=Station Feature, label=lst:station_feature]
+{
+  "type": "Feature",
+  "properties": {
+    "stop_id": "4637",
+    "stop_sequence": 1,
+    "stop_name": "Sindelf. Eichholz",
+    "departure_time_secs": "55560",
+    "arrival_time_secs": "55560",
+    "secs_between_stops": 60,
+    "dist_traveled": 0,
+    "delta_dist_traveled": 0
+  },
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      9.002212,
+      48.73068
+    ]
+  }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[captionpos=t, caption=Station Matching, label=lst:match_station, language=JavaScript]
+const _ = require('lodash');
+const knn = require('rbush-knn');
+const rbush = require('rbush');
+const turf = require('turf');
+
+// own implementation of turf.js pointOnLine()
+// https://github.com/Turfjs/turf/tree/master/packages/turf-point-on-line
+function getPointOnLine(line, pt, units) {
+  let coords;
+
+  if (line.type === 'Feature') {
+    coords = line.geometry.coordinates;
+  } else if (line.type === 'LineString') {
+    coords = line.coordinates;
+  } else {
+    throw new Error('input must be a LineString Feature or Geometry');
+  }
+
+  let closestPt = turf.point([Infinity, Infinity], { dist: Infinity });
+  const start = turf.point(coords[0]);
+  const stop = turf.point(coords[1]);
+  start.properties.dist = turf.distance(pt, start, units);
+  stop.properties.dist = turf.distance(pt, stop, units);
+  // perpendicular
+  const heightDistance = Math.max(start.properties.dist, stop.properties.dist);
+  const direction = turf.bearing(start, stop);
+  const perpendicularPt1 = turf.destination(pt, heightDistance, direction + 90, units);
+  const perpendicularPt2 = turf.destination(pt, heightDistance, direction - 90, units);
+  const intersect = turf.lineIntersect(
+    turf.lineString([perpendicularPt1.geometry.coordinates, perpendicularPt2.geometry.coordinates]),
+    turf.lineString([start.geometry.coordinates, stop.geometry.coordinates]));
+  let intersectPt = turf.point([Infinity, Infinity], { dist: Infinity });
+  if (intersect.features.length > 0) {
+    intersectPt = intersect.features[0];
+    intersectPt.properties.index = line.properties.index1;
+    intersectPt.properties.dist = turf.distance(pt, intersectPt, units);
+  }
+
+  if (start.properties.dist < closestPt.properties.dist) {
+    closestPt = start;
+    closestPt.properties.index = line.properties.index1;
+  }
+  if (stop.properties.dist < closestPt.properties.dist) {
+    closestPt = stop;
+    closestPt.properties.index = line.properties.index2;
+  }
+  if (intersectPt && intersectPt.properties.dist < closestPt.properties.dist) {
+    closestPt = intersectPt;
+    closestPt.properties.index = line.properties.index1;
+  }
+  return closestPt;
+}
+
+// own implementation of turf.js pointOnLine()
+// https://github.com/Turfjs/turf/tree/master/packages/turf-line-slice
+function lineSlice(startPt, stopPt, line) {
+  const start = turf.point(startPt, { index: 0 });
+  let coords;
+  if (line.type === 'Feature') {
+    coords = line.geometry.coordinates;
+  } else if (line.type === 'LineString') {
+    coords = line.coordinates;
+  } else {
+    throw new Error('input must be a LineString Feature or Geometry');
+  }
+  const ends = [stopPt, start];
+  const clipCoords = [ends[0].geometry.coordinates];
+  for (let i = ends[0].properties.index + 1; i < ends[1].properties.index + 1; i += 1) {
+    clipCoords.push(coords[i]);
+  }
+  clipCoords.push(ends[1].geometry.coordinates);
+  return turf.lineString(clipCoords, line.properties);
+}
+
+function fillTree(trips) {
+  const tree = rbush(200, ['[0]', '[1]', '[0]', '[1]', '[2]']);
+  const coords = [];
+  for (let k = 0; k < trips.features[0].geometry.coordinates.length; k += 1) {
+    const item = [
+      trips.features[0].geometry.coordinates[k][0],
+      trips.features[0].geometry.coordinates[k][1],
+      { index: k },
+    ];
+    coords.push(item);
+  }
+  tree.load(coords);
+  return tree;
+}
+
+function matchStation(geojson) {
+  _.forEach(geojson, (trips) => {
+    const shape = _.first(trips.features);
+    for (let i = 1; i < trips.features.length; i += 1) {
+      const tree = fillTree(trips);
+      const lat = trips.features[i].geometry.coordinates[0];
+      const lng = trips.features[i].geometry.coordinates[1];
+      const neighbours = knn(tree, lat, lng, 2);
+      const line = turf.lineString([
+        [neighbours[0][0], neighbours[0][1]],
+        [neighbours[1][0], neighbours[1][1]]],
+        { index1: neighbours[0][2].index, index2: neighbours[1][2].index });
+      const pointOnLine = getPointOnLine(line, trips.features[i], 'kilometers');
+      const lineDistance = turf.lineDistance(lineSlice(trips.features[0].geometry.coordinates[0], pointOnLine, shape));
+      trips.features[i].properties.dist_traveled = lineDistance * 1000;
+      trips.features[i].geometry.coordinates = pointOnLine.geometry.coordinates;
+
+      if (i > 1) {
+        const deltaDist = trips.features[i].properties.dist_traveled - trips.features[i - 1].properties.dist_traveled;
+        trips.features[i].properties.delta_dist_traveled = Math.abs(deltaDist);
+      } else {
+        trips.features[i].properties.delta_dist_traveled = 0;
+      }
+    }
+  });
+  return geojson;
+}
+
+\end{lstlisting}
+
       
 \end{newpage}

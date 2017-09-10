@@ -31,33 +31,52 @@
 # Implementierung
 
 ## Backend 
-* Abschnitt / Gliederung des Abschnitts aufgreifen und erklären
+  * Abschnitt / Gliederung des Abschnitts aufgreifen und erklären
 
 ### Optimieren von GTFS
-* gtfstidy -> simplify shapes, integer ids, etc
-
+  * gtfstidy -> simplify shapes, integer ids, etc
 
 ### Database optimization for GTFS format (normalization)
 
 ### Finetune the Database for GIS queries
-* Why optimize
-* What can be optimized
-* A-B Test
-* Test results
+  * Why optimize
+  * What can be optimized
+  * A-B Test
+  * Test results
 
 ### Building an API for GTFS
-* Database queries
-* Endpoints
+  * Database queries
+  * Endpoints
 
 ## Frontend
-* Abschnitt / Gliederung des Abschnitts aufgreifen und erklären
+  * Client
+  * Geojson format
+  * Object access over trip id
+  * Algorithm? (most important ones)
+
+### Optimizing Frontend Performance
+  * Alter FPS per Zoom Level
+  * Split vehicles into 2 groups: Inside bbox and Outside
+  * Optimizing algorithms
+  * Save values to prevent their tedious recalculations
 
 ### Introduction of UI Components
-* Timeline + Time jump
-* Trip counter
-* Map (Zoom / Pan)
-* Vehicles
-* Vehicle states (getting active / inactive)
-* Filter mechanices of Lines + Vehicle type
-* Layer style switcher
-* Route finder
+  * Timeline + Time jump
+  * Trip counter
+  * Map (Zoom / Pan)
+  * Vehicles
+  * Vehicle states (getting active / inactive)
+  * Filter mechanices of Lines + Vehicle type
+  * Layer style switcher
+  * Route finder
+  * Bezier Easing
+
+
+# Ergebnisse
+  * Query times by trip amount
+  * FPS performance?
+
+# Ausblick
+
+# Fazit
+  * Was wurde erreicht und was nicht

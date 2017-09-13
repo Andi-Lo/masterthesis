@@ -113,8 +113,16 @@
         \end{center}
       \end{figure}
 
-      Für eine interaktive Karte bedeutet dies, dass je nach Tag zwischen 0 und 1000 Trips aktiv sein können. Dies entspricht dann auch der Anzahl an Vehicles die sie auf der Karte bewegen und animiert werden müssen. Damit dies möglich ist wurde nach Software Lösungen gesucht, die für solche Datenmassen ausgelegt sind. Für die Karte wird dafür Mapbox eingesetzt. Mapbox verwendet Web-GL (basierend auf OpenGL) und bietet damit die Möglichkeit ein GPU unterstütztes Rendering im Browser zu ermöglichen.\\
+      Für eine interaktive Karte bedeutet dies, dass je nach Tag zwischen 0 und 1000 Trips aktiv sein können. Dies entspricht dann auch der Anzahl an Vehicles die sie auf der Karte bewegen und animiert werden müssen. Damit dies möglich ist wurde nach Software Lösungen gesucht, die für solche Datenmassen ausgelegt sind. Für die Karte wird dafür Mapbox eingesetzt. Mapbox verwendet Web-GL (basierend auf OpenGL) und bietet damit die Möglichkeit ein GPU unterstütztes Rendering im Browser zu ermöglichen. Zusätzlich bietet Mapbox eigene Karten-Styles an. Diese können über Mapbox-Studio voll umfänglich auf die eigenen Bedürfnisse angepasst werden. Parks, Straßen, Schriftzüge, nahezu alle Elemente der Karte lassen sich ändern und anpassen. Zusätzlich können eigene Daten in die Karte integrieren werden, was Bandbreite und Rechenleistung spart. Damit konnten sämtliche Routen die das Stuttgart-VVS Feed beinhaltet, in das Kartenmaterial zeichnen (siehe orangene Linien in Abbildung \ref{fig:map_tiles_routes}).\\
 
+      \begin{figure}[htbp]
+        \begin{center}
+          \includegraphics[width=0.5\textwidth]{map_tiles_routes}
+          \caption{Karte mit integrierten Stuttgart-VVS Daten}
+          \label{fig:map_tiles_routes}
+        \end{center}
+      \end{figure}
+      
       Die Wahl der richtigen Tools ist dabei nur die Grundlage um die Datenmenge zu bewältigenden. Viele weitere Schritte sind notwendig um eine performante Webanwendung zu erstellen. Diese werden in Kapitel \ref{sub:backend} \nameref{sub:backend} und \ref{sub:frontend} \nameref{sub:frontend} ausführlich behandelt.
         
     % subsection bewältigung_der_datenmenge (end)

@@ -12,16 +12,20 @@
 \usepackage{color}
 \usepackage{hyperref}
 \usepackage{pdflscape}
-\usepackage{graphicx}
+\usepackage{graphicx, calc}
 \usepackage{subfig}
 \usepackage{listings}
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{fancyhdr}
 \usepackage{nameref}
+\usepackage{float}
 \usepackage{enumitem}
 \usepackage{mathtools}
 \usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \addbibresource{cites.bib}
 \pagestyle{empty}
 \author{Andreas Lorer}
@@ -30,6 +34,18 @@
 
 \graphicspath{{images/}
 }\setlength{\parindent}{0ex}
+
+% https://tex.stackexchange.com/questions/258299/embed-small-image-within-a-line-of-text
+\newlength\myheight
+\newlength\mydepth
+\settototalheight\myheight{Xygp}
+\settodepth\mydepth{Xygp}
+\setlength\fboxsep{0pt}
+\newcommand*\inlinegraphics[1]{%
+  \settototalheight\myheight{Xygp}%
+  \settodepth\mydepth{Xygp}%
+  \raisebox{-\mydepth}{\includegraphics[height=\myheight]{#1}}%
+}
 
 % https://tex.stackexchange.com/questions/16765/biblatex-author-year-square-brackets
 % \newrobustcmd*{\parentexttrack}[1]{%
@@ -125,8 +141,8 @@
   % Former: Real-Time Transit Map Visualization
   \newcommand{\headline}{GTFS Live Vehicle Position \\ Map Visualization}
   \newcommand{\subheadline}{}
-	\input{coversheet/coversheet.tex}
-  \input{sections/abstract.tex}
+	\input{coversheet/coversheet}
+  \input{sections/abstract}
 
 	%Table of contents
   \thispagestyle{empty}
@@ -140,15 +156,18 @@
   \renewcommand{\headrulewidth}{0.4pt}
   \renewcommand{\footrulewidth}{0pt}
 
-  \input{sections/introduction.tex}
-  \input{sections/basics.tex}
-  \input{sections/related_work.tex}
-  \input{sections/problem.tex}
-  \input{sections/implementation/implementation.tex}
-  \input{affidavit.tex}
+  \input{sections/introduction}
+  \input{sections/basics}
+  \input{sections/related_work}
+  \input{sections/problem}
+  \input{sections/implementation/implementation}
+  \input{sections/problem_solving_process}
+  \input{sections/results}
+  \input{sections/fazit}
+  \input{affidavit}
   
 	\printbibliography
 
-  \input{sections/appendix.tex}
+  \input{sections/appendix}
 
 \end{document}

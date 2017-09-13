@@ -69,12 +69,11 @@
   * Filter mechanices of Lines + Vehicle type
   * Layer style switcher
   * Route finder
-  * Bezier Easing
+  * Bezier Easing 
 
 
 # Ergebnisse
-  * Query times by trip amount
-  * FPS performance?
+  * What did I wanted to achiev and what was the outcome
 
 # Ausblick
 

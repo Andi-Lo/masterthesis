@@ -3,10 +3,8 @@
   Building an API for GTFS
 
 11. - 13.
-  Frontend Client
-  Geojson format
-  Algorithms
-  Frontend performance
+  Client
+  Frontend Performance
 
 14. - 17.
   UI Components

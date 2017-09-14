@@ -62,7 +62,8 @@
 
     \subsection{Develop}
     \label{sub:develop}
-      Zum Beginn wurde ein möglichst vollständiges GTFS-Feed aus \texttt{TransitFeeds.com} ausgewählt und in die Datenbank importiert. Die Wahl fiel dabei auf das Boston-MBTA Feed. Die Herausforderung bestand nun darin, erste Daten aus der Datenbank an den Client zu senden und sie dort darzustellen. Dafür wurde versucht eine möglichst einfache Datenbankabfrage zu finden. Fast trivial ist das abfragen der Polyline: \colorbox{materialGrey}{\texttt{\color{white}{{\color{materialBlue} SELECT} * {\color{materialBlue}FROM} gtfs\_shapes {\color{materialBlue}WHERE} shape\_id = {\color{materialRed}12345}}}}
+      Zu beginn stellte sich die Frage, wie sich in kleinen Schritten an das komplexe Thema einer Live Visualisierung rangetastet werden kann. Die erste Hürde die zu nehmen ist, stellt die Animation vor nur \textbf{einem} Vehicle entlang der Polyline dar.
+      Um eine Datengrundlage zu haben wurde ein möglichst vollständiges GTFS-Feed aus \texttt{TransitFeeds.com} ausgewählt und in die Datenbank importiert. Die Wahl fiel dabei auf das Boston-MBTA Feed. Die Herausforderung bestand nun darin, erste Daten aus der Datenbank an den Client zu senden und sie dort darzustellen. Dafür wurde versucht eine möglichst einfache Datenbankabfrage zu finden. Fast trivial ist das abfragen der Polyline: \colorbox{lightGrey}{\texttt{\color{white}{{\color{materialBlue} SELECT} * {\color{materialBlue}FROM} gtfs\_shapes {\color{materialBlue}WHERE} shape\_id = {\color{materialRed}12345}}}}
       Diese Daten werden als GeoJSON übertragen und lassen sich mit Mapbox-gl-js sehr einfach anzeigen. In der Karte ergibt sich daraus eine Route auf der sich ein Vehicle entlangbewegen kann.
 
       \begin{figure}[htbp]

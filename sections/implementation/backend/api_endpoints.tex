@@ -15,10 +15,9 @@
 ]
 \end{lstlisting}
 
-    \item \textbf{/trips/:from,:to} Ermöglicht das Abfragen von Trips, die in einer Zeitspanne \texttt{from - to} aktiv sind. Beim initialen Aufruf der Webanwendung wird dieser Endpunkt als erstes angefragt um die aktiven Trips innerhalb einer Stunde zu bekommen. Der gewählte Zeitraum ist in Sekunden anzugeben. Die Definition ist wie folgt: $t_{from} = now$ und $t_{to} = now + 600 sec$. Die Sekunden lassen sich durch das Addieren der Stunden, Minuten und Sekunden errechnen. Bsp: 17:04:59 Uhr
+    \item \textbf{/trips/:from,:to} Ermöglicht das Abfragen von Trips, die in einer Zeitspanne \texttt{from - to} aktiv sind. Beim initialen Aufruf der Webanwendung wird dieser Endpunkt als erstes angefragt um die aktiven Trips innerhalb einer Stunde zu bekommen. Der gewählte Zeitraum ist in Sekunden anzugeben. Die Definition ist wie folgt: $t_{from} = now$ und $t_{to} = now + 600 sec$. Die Sekunden lassen sich nach der Formel aus Kapitel \ref{ssub:time} berechnen.
+     durch das Addieren der Stunden, Minuten und Sekunden errechnen. Bsp: 17:04:59 Uhr
 
-    Stunden $*$ 3600 $+$ Minuten $*$ 60 $+$ Sekunden\\
-    $\Rightarrow$ $17 * 3600 + 4 * 60 + 59 = 61499$\\
     $\Rightarrow t_{from} = 61499 \Rightarrow t_{to} = 61499 + 600\;sec$ $\Rightarrow$ \texttt{/trips/61499,62099}
 
     Die Antwort des Servers auf einen Endpunkt vom Typ \texttt{/trips/} ist ein Objekt mit der Trip\_Id, dessen Inhalt der \texttt{GeoJSON} spezifikation nach RFC 7946 folgt:

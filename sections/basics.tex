@@ -7,6 +7,18 @@
   \label{sub:begriffe}
     Nachfolgend sollen die wichtigsten Begriffe definiert werden, um ein Einheitliches Verständnis zu garantieren.
 
+    \subsubsection{Time}
+    \label{ssub:time}
+      In verschiedenen Formeln wird immer wieder eine Time $t$ referenziert. Diese beschreibt die Globale (aktuelle) Zeit des Systems in Sekunden. 
+      Die Sekunden lassen sich durch das Addieren der Stunden, Minuten und Sekunden errechnen.\\
+
+      Bsp: 17:04:59 Uhr\\
+
+      $t = $ Stunden $*$ 3600 $+$ Minuten $*$ 60 $+$ Sekunden\\
+      $\Rightarrow$ $t = 17 * 3600 + 4 * 60 + 59 = 61499 \; sec$
+      
+    % subsubsection time (end)
+
     \subsubsection{Vehicle}
     \label{ssub:vehicle}
       Ein Vehicle $V$ beschreibt in dieser Arbeit ein Fahrzeug, welches im Dienste der öffentlichen Verkehrsbeförderung steht. Beispielsweise Bus, U- \& S-Bahn, Interrail Züge aber auch Zahnradbahn oder gar Funicular-Services\footnote{\url{https://en.wikipedia.org/wiki/Funicular}}. Das private Automobil fällt folglich nicht unter diese Definition.
@@ -19,13 +31,7 @@
 
     \subsubsection{Station}
     \label{ssub:station}
-      Eine Station $S$ ist eine Haltestelle, die von einem Vehicle $V$ während eines Trips $T$ angefahren wird und sich entlang einer Polyline befindet. Die Station definiert dabei die Ankunfts- und Abfahrtszeiten, wann ein Vehicle an dieser Station haltet und wann es diese zur weiterfahrt wieder verlässt. Ankunfts- und Abfahrtszeit seien wie folgt definiert:
-
-      \begin{itemize}[label={}]
-        \item arrival time $ := t_{ari}$
-        \item departure time $ := t_{dep}$
-      \end{itemize}
-    % subsubsection station (end)
+      Eine Station $S$ ist eine Haltestelle, die von einem Vehicle $V$ während eines Trips $T$ angefahren wird und sich entlang einer Polyline befindet. Die Station definiert dabei die Ankunfts- und Abfahrtszeiten, wann ein Vehicle an dieser Station anhaltet und wann es diese zur Weiterfahrt wieder verlässt. Ankunfts- und Abfahrtszeit seien wie folgt definiert: \texttt{arrival time} $ := t_{ari}$ und \texttt{departure time} $ := t_{dep}$.
 
     \subsubsection{Trip}
     \label{ssub:trip}

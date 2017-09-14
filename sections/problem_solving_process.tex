@@ -62,8 +62,8 @@
 
     \subsection{Develop}
     \label{sub:develop}
-      Zum Beginn wurde ein möglichst vollständiges GTFS-Feed aus \texttt{TransitFeeds.com} ausgewählt und in die Datenbank importiert. Die Wahl fiel dabei auf das Boston-MBTA Feed. Die Herausforderung bestand nun darin, erste Daten aus der Datenbank an den Client zu senden und sie dort darzustellen. Dafür wurde versucht eine möglichst einfache Datenbankabfrage zu finden. Fast trivial ist das abfragen der Polyline in der Datenbank: \colorbox{materialGrey}{\texttt{\color{white}{{\color{materialBlue} SELECT} * {\color{materialBlue}FROM} gtfs\_shapes {\color{materialBlue}WHERE} shape\_id = {\color{materialRed}12345}}}}
-      Diese Daten lassen sich auch sehr einfach mittels \texttt{GeoJSON} anzeigen. Als erstes sollt also einfach eine Route angezeigt werden, auf der sich ein Vehicle bewegen würde.
+      Zum Beginn wurde ein möglichst vollständiges GTFS-Feed aus \texttt{TransitFeeds.com} ausgewählt und in die Datenbank importiert. Die Wahl fiel dabei auf das Boston-MBTA Feed. Die Herausforderung bestand nun darin, erste Daten aus der Datenbank an den Client zu senden und sie dort darzustellen. Dafür wurde versucht eine möglichst einfache Datenbankabfrage zu finden. Fast trivial ist das abfragen der Polyline: \colorbox{materialGrey}{\texttt{\color{white}{{\color{materialBlue} SELECT} * {\color{materialBlue}FROM} gtfs\_shapes {\color{materialBlue}WHERE} shape\_id = {\color{materialRed}12345}}}}
+      Diese Daten werden als GeoJSON übertragen und lassen sich mit Mapbox-gl-js sehr einfach anzeigen. In der Karte ergibt sich daraus eine Route auf der sich ein Vehicle entlangbewegen kann.
 
       \begin{figure}[htbp]
         \begin{center}
@@ -73,21 +73,34 @@
         \end{center}
       \end{figure}
       
-      Abbildung \ref{fig:prozess/draw_single_shape} zeigt das erste Ergebnis dieser Iteration. Zu sehen ist bereits die Karte und eine blaue Polyline. Nachdem dieser Datensatz auf Client-Seite verarbeitet werden kann, musste das Backend wieder neue Abfragen von Daten ermöglichen. Dieser ständige Wechsel zwischen der Arbeit an Frontend und Backend zog sich durch das gesamte Projekt hinweg durch und stellte sich als sehr effektiv heraus. Erst durch die Arbeit am Frontend, wurde immer wieder klar, welche Daten überhaupt benötigt wurden und in welchem Format diese am besten sein müssen.\\
+      Abbildung \ref{fig:prozess/draw_single_shape} zeigt das Ergebnis dieser ersten Iteration. Zu sehen ist bereits die Karte und eine blaue Polyline. Nachdem dieser Datensatz auf Client-Seite verarbeitet werden kann, musste das Backend wieder neue Abfragen von Daten ermöglichen. Dieser ständige Wechsel zwischen der Arbeit an Frontend und Backend zog sich durch das gesamte Projekt hinweg durch und stellte sich als sehr effektiv heraus. Erst durch die Arbeit am Frontend, wurde immer wieder klar, welche Daten überhaupt gebraucht und in welchem Format diese am besten sein müssen.\\
 
-      Nachdem also die Polyline auf der Karte angezeigt wurde, machte es Sinn auch die einzelnen Stationen auch darzustellen. Damit die Daten besser verständlich sind und schnell auf ihren Inhalt untersucht werden können, konnten sie durch einfaches anklicken inspiziert werden.
+      Nachdem die Polyline auf die Karte gebracht wurde, machte es Sinn auch die einzelnen Stationen darzustellen. Damit die Daten besser verständlich sind und schnell auf ihren Inhalt untersucht werden können, öffnet sich beim anklicken ein Popup.
 
       \begin{figure}[htbp]
         \begin{center}
-          \includegraphics[width=0.6\textwidth]{prozess/add_stations}
+          \includegraphics[width=0.5\textwidth]{prozess/add_stations}
           \caption{Hinzufügen von Stationen entlang der Polyline}
           \label{fig:prozess/add_stations}
         \end{center}
       \end{figure}
-          
+
+      An dieser Stelle sind bereits alle Informationen vorhanden, die benötigt werden um ein Vehicle zwischen den einzelnen Stationen fahren zu lassen. Ein Ansatz dafür, ist die Verwendung der Funktion \texttt{turf.along()}. Diese Funktion nimmt eine Polyline und gibt einen Punkt in einer bestimmten Entfernung entlang dieser Polyline zurück. Die Polyline ist bekannt, es fehlt die Distanz zwischen den einzelnen Stationen. Diese wird wie in Sektion \textit{\ref{ssub:station_matching} \nameref{ssub:station_matching}} im Backend berechnet. Des weiteren brauchen wir die Geschwindigkeit des Vehicles. Sind all diese Parameter vorhanden, lässt sich die Distanz des Vehicles (zwischen den einzelnen Stationen) zu jedem Zeitpunkt $t_i$ interpolieren.
+
+      \begin{figure}[htbp]
+        \begin{center}
+          \includegraphics[width=0.9\textwidth]{interpolating_vehicle}
+          \caption{Interpolation der Vehicle Position: $V_p$}
+          \label{fig:interpolating_vehicle}
+        \end{center}
+      \end{figure}
+
+      Die durchschnittliche Geschwindigkeit, die das Vehicle zwischen zwei Stationen hat, lässt sich über $v = \frac{d_\triangle}{TimeDifference}$ berechnen. Damit ist die Geschwindigkeit vorhanden und die interpolierte Distanz des Vehicles zu jedem Zeitpunkt $t_i$ lässt sich über die Formel der gleichförmigen Bewegung: $s_{neu} = v * t + s_0$ berechnen. Das resultierende $s_{neu}$ der Formel, kann dann an \texttt{turf.along(polyline, $s_{neu}$)} übergeben werden und gibt uns eine neue Position des Vehicles auf der Polyline zurück. Wird nun die Karte mit der neuen Position aktualisiert, fährt das Vehicle von Station zu Station. Natürlich müssen hier verschiedene Randbedingungen beachtet werden, beispielsweise was passiert, wenn das Vehicle am Ende angelangt ist oder wie werden Aufenthalte an einer Station beachtet.
+      
       
       
     % subsection develop (end)
+
 
     \subsection{Deliver}
     \label{sub:deliver}

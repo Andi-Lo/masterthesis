@@ -1,12 +1,44 @@
 \subsubsection{GTFS - Probleme und Herausforderungen}
 \label{ssub:gtfs_probleme_und_herausforderungen}
-   Bereits 1993 stellte \texttt{Jakob Nielsen} einen Richtwert für die Antwortzeit einer schnellen Webanwendung vor:
+  Trotz der Standardisierung durch GTFS gibt es immer noch diverse Freiräume in der Umsetzung des Formats. Wie anfangs erwähnt wurde, beträgt die Anzahl der Dateien die für ein gültiges GTFS Feed benötigt werden nur 6. Es sind allerdings bis zu 13 Dateien möglich. Dies zeigt wie viele unterschiedliche Informationen ein GTFS Feed bereitstellen kann, aber nicht muss. 
+  Auch innerhalb der Dateien gibt es Felder die vorhanden sein "`müssen"' oder nur "`dürfen"'. Beispielsweise muss das Feld \texttt{route\_short\_name} in \texttt{routes.txt} vorhanden sein, aber \texttt{route\_desc} (Route Description) nicht. Der Interpretationsspielraum lässt sich aber noch weiter veranschaulichen, wenn wir uns Tabelle ~\ref{table:gtfs_differences} ansehen. In dieser Tabelle sind Zwei Einträge aus unterschiedlichen GTFS Feeds aufgelistet.
+  Wir sehen, dass die Spalte \texttt{route\_id} bei Stuttgart-VVS als Zahlenwert angegeben wird, wohingegen Boston-MBTA einen Text verwendet.
+
+  \begin{longtable}{|>{\raggedright \arraybackslash}p{3.0cm}|>{\raggedright \arraybackslash}p{2.0cm}|>{\raggedright \arraybackslash}p{3.5cm}|>{\raggedright \arraybackslash}p{5.5cm}|}
+  \caption{Unterschiede innerhalb GTFS} 
+  \label{table:gtfs_differences}\\
+    \hline
+     & route\_id & route\_short\_name & route\_long\_name\\
+    \hline
+    Stuttgart-VVS & 379 & U1 & Fellbach - Hauptbahnhof - Vaihingen\\
+    \hline
+    Boston-MBTA & Blue Line & Blue & Bowdoin - Wonderland\\
+    \hline
+  \end{longtable}
+
+  "`Blue Line"' ist dabei die Bezeichnung der U-Bahnlinie\parencite{wiki_blue_line}. Wir sehen also, dass Stuttgart-VVS die \texttt{route\_id} zur eindeutigen Identifizierung mittels Zahlenwert verwendet wohingegen Boston-MBTA dieses Feld nutzt, um den Namen der Linie zu beschreiben. Angenommen wir verwenden die \texttt{route\_id} in einer Benutzeroberfläche wie in Abbildung~\ref{fig:gtfs_differences}.
+
+  \begin{figure}[htbp]
+    \begin{center}
+      \includegraphics[width=\textwidth]{gtfs_differences.jpg}
+      \caption{UI Element mit GTFS Informationen}
+      \label{fig:gtfs_differences}
+    \end{center}
+  \end{figure}
+
+  Links in der Abbildung ist die korrekte Bezeichnung der Route zu sehen nämlich \texttt{Blue Line}, wohingegen rechts nur eine numerische ID zu sehen ist, die nicht für den Nutzer vorgesehen und damit falsch ist. Damit die rechte Seite korrekt wäre müsste dort \texttt{U1} abgebildet sein. Die fehlende beziehungsweise nicht gegebene Übereinstimmung der beiden Feeds führt also zu Problemen bei der Darstellung die auch durch die Verwendung eines anderen Feldes wie zum Beispiel \texttt{route\_short\_name} nicht behoben werden können. 
+
+  Dies ist nur ein Beispiel, bei dem Abweichungen in der Ausführung der Spezifikation eine Auswirkung auf die Programmierung haben. Aus diesem Grund ist im März 2017 auf \url{http://gtfs.org/} eine neue \texttt{Best-Practices} Sektion erschienen. Dabei handelt es sich um Empfehlungen an die Hersteller von GTFS Feeds, um eine Verwendung der Feeds möglichst zu vereinheitlichen. Würden sich alle Hersteller an solch eine striktere Implementierung der Spezifikation halten, müssten Programmierer weniger "`Edge Cases"'\footnotemark abfangen und Anwendungen würden in Qualität und Zuverlässigkeit noch besser werden.\\
+
+  \footnotetext{Ein "`Edge Case"' ist ein Problem oder eine Situation, die nur bei einem extremen (maximalen oder minimalen) Betriebsparameter auftritt.}
+
+  Ein weiteres Problem in GTFS ist das auslesen von Daten. GTFS lässt sich zwar sehr einfach in eine relationale Datenbank überführen, aber das Auslesen der Daten kann schnell sehr komplex werden, sodass die Geschwindigkeit für eine Webanwendung nicht mehr schnell ist. Bereits 1993 stellte \texttt{Jakob Nielsen} einen Richtwert für die responsive Wahrnehmung einer Webanwendung vor:
 
   \begin{quote}
     \textit{"`1.0 second is about the limit for the user's flow of thought to stay uninterrupted, even though the user will notice the delay. Normally, no special feedback is necessary during delays of more than 0.1 but less than 1.0 second, but the user does lose the feeling of operating directly on the data."'}\parencite{nielsen}
   \end{quote}
 
-  Ob oder wie dies Antwortzeit erreicht werden kann, soll hier nicht vertieft werden, denn zu diesem Thema habe ich bereits meine Bachelorarbeit gewidmet\parencite{lorer}.
+  Ob oder wie die Geschwindigkeit erreicht werden kann, soll hier nicht vertieft werden, denn zu diesem Thema habe ich bereits meine Bachelorarbeit gewidmet\parencite{lorer}.
 
   Damit eine Webanwendung aber überhaupt eine Chance hat, diese Geschwindigkeitsmarke zu erreichen, ist eine schnelle Antwortzeit des Backends sehr wichtig. Dabei sind Antwortzeiten Innerhalb von 1 bis 200 Millisekunden ein sehr guter Wert. Natürlich gilt: Je weniger umso besser. Diese Benchmark mit dem GTFS Format zu erreichen war eine der Hauptherausforderungen dieser Arbeit.\\
 

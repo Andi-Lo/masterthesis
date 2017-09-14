@@ -80,7 +80,7 @@
     breaklines=true,
     numbers=left,
     numbersep=5pt,
-    deletekeywords={event}, 
+    deletekeywords={event},
     numberstyle=\tiny,
     showspaces=false,
     showtabs=false,
@@ -143,11 +143,11 @@
   \newcommand{\headline}{GTFS Live Vehicle Position \\ Map Visualization}
   \newcommand{\subheadline}{}
 	\input{coversheet/coversheet}
-  \input{sections/abstract}
+  \input{sections/01_abstract/abstract}
 
 	%Table of contents
   \thispagestyle{empty}
-	\tableofcontents 
+	\tableofcontents
   \clearpage
   \pagestyle{fancy}
   \fancyhf{}
@@ -157,18 +157,18 @@
   \renewcommand{\headrulewidth}{0.4pt}
   \renewcommand{\footrulewidth}{0pt}
 
-  \input{sections/introduction}
-  \input{sections/basics}
-  \input{sections/related_work}
-  \input{sections/problem}
-  \input{sections/implementation/implementation}
-  \input{sections/problem_solving_process}
-  \input{sections/results}
-  \input{sections/fazit}
-  \input{affidavit}
-  
+  \input{sections/01_abstract/abstract}
+  \input{sections/02_introduction/introduction}
+  \input{sections/03_discover/discover}
+  \input{sections/04_define/define}
+  \input{sections/05_develop/develop}
+  \input{sections/06_deliver/deliver}
+  % \input{sections/07_conclusion/results}
+  \input{sections/07_conclusion/fazit}
+  \input{sections/08_appendix/affidavit}
+
 	\printbibliography
 
-  \input{sections/appendix}
+  \input{sections/08_appendix/appendix}
 
 \end{document}

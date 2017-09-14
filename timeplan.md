@@ -1,13 +1,14 @@
-6. - 10. 
+__6. - 10.__
   Finetune the Database for GIS queries
   Building an API for GTFS
 
-11. - 13.
+__11. - 13.__
   Client
   Frontend Performance
+  UI Components
 
 14. - 17.
-  UI Components
+  Double Diamond: Develop & Deliver  
 
 18. - 21.
   Eregebnisse

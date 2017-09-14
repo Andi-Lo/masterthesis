@@ -40,10 +40,27 @@
 	"buffers":
 	[
 		{
-			"file": "sections/implementation/backend/optimizing_gtfs.tex",
+			"file": "sections/implementation/frontend/ui_components.tex",
 			"settings":
 			{
-				"buffer_size": 3015,
+				"buffer_size": 8975,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "timeplan.md",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "sections/implementation/backend/optimizing_polylines.tex",
+			"settings":
+			{
+				"buffer_size": 6317,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -104,25 +121,37 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 215.0,
-		"last_filter": "schem",
+		"height": 269.0,
+		"last_filter": "theme",
 		"selected_items":
 		[
 			[
-				"schem",
+				"theme",
 				"Select Color Scheme"
 			],
 			[
-				"theme",
-				"Select Color Scheme"
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"settings",
+				"Preferences: Settings"
+			],
+			[
+				"snippet list",
+				"Snippet: Listing env."
+			],
+			[
+				"snippet",
+				"Snippet: Monospace text"
 			],
 			[
 				"mark",
 				"MarkdownLivePreview: Edit Current File"
 			],
 			[
-				"snippet list",
-				"Snippet: Listing env."
+				"schem",
+				"Select Color Scheme"
 			],
 			[
 				"resour",
@@ -131,10 +160,6 @@
 			[
 				"resource",
 				"PackageResourceViewer: Open Resource"
-			],
-			[
-				"install",
-				"Package Control: Install Package"
 			],
 			[
 				"th",
@@ -159,10 +184,6 @@
 			[
 				"snipet",
 				"Snippet: Table"
-			],
-			[
-				"settings",
-				"Preferences: Settings"
 			],
 			[
 				"tosapces",
@@ -225,7 +246,7 @@
 				"Set Syntax: LaTeX"
 			]
 		],
-		"width": 503.0
+		"width": 412.0
 	},
 	"console":
 	{
@@ -246,37 +267,54 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/loreran/Documents/mastherthesis",
-		"/Users/loreran/Documents/mastherthesis/images",
-		"/Users/loreran/Documents/mastherthesis/sections",
-		"/Users/loreran/Documents/mastherthesis/sections/implementation"
+		"/Users/loreran/Documents/mastherthesis"
 	],
 	"file_history":
 	[
-		"/Users/loreran/Documents/mastherthesis/sections/basics.tex",
-		"/Users/loreran/Documents/mastherthesis/main.tex",
-		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/gtfs_problems_and_challenges.tex",
-		"/Users/loreran/Documents/mastherthesis/sections/appendix.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/problem_solving_process.tex",
 		"/Users/loreran/Documents/mastherthesis/cites.bib",
-		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/backend.tex",
-		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/optimizing_gtfs.tex",
-		"/Users/loreran/Documents/mastherthesis/sections/implementation/implementation.tex",
-		"/Users/loreran/Documents/mastherthesis/sections/problem.tex",
 		"/Users/loreran/Documents/mastherthesis/outline.md",
+		"/Users/loreran/Documents/mastherthesis/main.tex",
+		"/Users/loreran/Documents/Bosch Mini Präsentation.md",
+		"/Users/loreran/Documents/mastherthesis/sections/results.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/fazit.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/implementation.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/problem_solving_process.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/frontend/improving_client_performance.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/optimizing_polylines.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/frontend/frontend.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/frontend/client.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/building_an_API.tex",
+		"/Users/loreran/Documents/mastherthesis/timeplan.md",
+		"/Users/loreran/Documents/mastherthesis/sections/problem.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/backend_performance.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/station_matching.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/denormalizing_the_database.tex",
+		"/Users/loreran/Documents/workspace/rtt-map/dailyTrips/.ca81ad1f649a354e3a07ea3027314b93.json",
+		"/Users/loreran/Documents/mastherthesis/sections/basics.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/gtfs_problems_and_challenges.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/backend.tex",
+		"/Users/loreran/Documents/mastherthesis/.gitignore",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/server.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/appendix.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/shape_matching.tex",
+		"/Users/loreran/Documents/mastherthesis/images/shape_matching.psb",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/Server.tex",
+		"/Users/loreran/Documents/mastherthesis/coversheet/coversheet.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/configuration.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/normalizing_the_database.tex",
+		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/optimizing_gtfs.tex",
+		"/Users/loreran/Documents/mastherthesis/main.pdf",
 		"/Users/loreran/Documents/mastherthesis/sections/related_work.tex",
 		"/Users/loreran/Documents/mastherthesis/thesis.sublime-project",
 		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/creating_database.tex",
 		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/importing_into_database.tex",
 		"/Users/loreran/Documents/mastherthesis/sections/implementation/optimizing_gtfs.tex",
 		"/Users/loreran/Documents/mastherthesis/sections/implementation/importing_into_database.tex",
-		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/configuration.tex",
-		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/building_an_API.tex",
 		"/Users/loreran/Documents/mastherthesis/sections/introduction.tex",
 		"/Users/loreran/Documents/mastherthesis/sections/implementation/frontend/ui_components.tex",
 		"/Users/loreran/Documents/mastherthesis/sections/implementation/creating_database.tex",
-		"/Users/loreran/Documents/mastherthesis/sections/implementation/backend/normalizing_the_database.tex",
 		"/Users/loreran/Documents/mastherthesis/sections/abstract.tex",
-		"/Users/loreran/Documents/mastherthesis/coversheet/coversheet.tex",
 		"/Users/loreran/Documents/mastherthesis/sections/implementation.tex",
 		"/Users/loreran/Library/Application Support/Sublime Text 3/Packages/LaTeX/Snippets/subsection-..-(sub).sublime-snippet",
 		"/Users/loreran/Library/Application Support/Sublime Text 3/Packages/LaTeX/Snippets/subsubsection-..-(ssub).sublime-snippet",
@@ -286,7 +324,6 @@
 		"/Users/loreran/Documents/mastherthesis/affidavit.tex",
 		"/Users/loreran/Library/Application Support/Postgres/var-9.5/postgresql.conf",
 		"/Users/loreran/Documents/mastherthesis/quotes.md",
-		"/Users/loreran/Documents/mastherthesis/.gitignore",
 		"/Users/loreran/Documents/mastherthesis/sections/analyse.tex",
 		"/Users/loreran/Documents/workspace/moovel-transit/app/validators/tripsReqValidator.js",
 		"/Users/loreran/Documents/workspace/moovel-transit/app/services/gtfsService.js",
@@ -300,7 +337,6 @@
 		"/Users/loreran/Documents/workspace/test/gulpfile.js",
 		"/Users/loreran/Documents/workspace/test/src/index.html",
 		"/Users/loreran/Documents/workspace/test/dist/bundle.min.js",
-		"/Users/loreran/Documents/mastherthesis/main.pdf",
 		"/Users/loreran/Documents/workspace/moovel-transit/app/repositories/gtfsRepo.js",
 		"/Users/loreran/Documents/workspace/moovel-transit/app/routes/v1/api-doc.apib",
 		"/Users/loreran/Downloads/test.sql",
@@ -318,7 +354,7 @@
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 26.0
 	},
 	"find_in_files":
 	{
@@ -329,9 +365,52 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"filename",
+			"Frontend",
+			"SELECT",
+			"encoding",
+			".tex",
+			"2",
+			"48",
+			"{}",
+			"algorithm",
+			"amsmath",
+			"60",
+			"29",
+			"40",
+			"60",
+			"1.0cm",
+			",",
+			".",
+			"000",
+			"00",
+			" ",
+			".tex",
+			"delta",
+			"*",
+			"'",
+			"’",
+			"'/trips/",
+			"ms",
+			"2017-09-06",
+			"numerize",
+			"itemize",
+			"antwort",
+			"Abfrage",
+			"Begriffe",
+			"begriffe",
+			"Begriffe",
+			"Grundlagen",
+			"~",
+			"Polyline",
+			"\\\\",
+			"simplify_",
+			"simplify_b",
+			"simplify_",
+			"simplify",
 			"setzung",
 			"voraussetzung",
 			"\\item",
@@ -390,7 +469,7 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": false,
+		"whole_word": true,
 		"wrap": true
 	},
 	"groups":
@@ -401,19 +480,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "sections/implementation/backend/optimizing_gtfs.tex",
+					"file": "sections/implementation/frontend/ui_components.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3015,
+						"buffer_size": 8975,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1627,
-								1627
+								6829,
+								6829
 							]
 						],
 						"settings":
@@ -432,45 +511,173 @@
 								},
 								"unmatched":
 								{
+									"1":
+									[
+										4838,
+										4839
+									]
 								}
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
 								"bh_default_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"spell_check": true,
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2645.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "timeplan.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "sections/implementation/backend/optimizing_polylines.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6317,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								271,
+								245
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										271,
+										272
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										244,
+										245
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
@@ -481,25 +688,51 @@
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content"
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
 							],
-							"spell_check": true,
-							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 122.0,
+						"translation.y": 323.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -507,11 +740,11 @@
 	],
 	"incremental_find":
 	{
-		"height": 34.0
+		"height": 26.0
 	},
 	"input":
 	{
-		"height": 24.0
+		"height": 26.0
 	},
 	"layout":
 	{
@@ -542,7 +775,7 @@
 	},
 	"output.latextools":
 	{
-		"height": 41.0
+		"height": 116.0
 	},
 	"pinned_build_system": "",
 	"project": "thesis.sublime-project",
@@ -558,12 +791,152 @@
 		"selected_items":
 		[
 			[
+				"polyline",
+				"sections/implementation/backend/optimizing_polylines.tex"
+			],
+			[
+				"bib",
+				"cites.bib"
+			],
+			[
+				"main",
+				"main.tex"
+			],
+			[
+				"poly",
+				"sections/implementation/backend/optimizing_polylines.tex"
+			],
+			[
+				"main.tex",
+				"main.tex"
+			],
+			[
+				"api",
+				"sections/implementation/backend/building_an_API.tex"
+			],
+			[
+				"outline",
+				"outline.md"
+			],
+			[
+				"implement",
+				"sections/implementation/implementation.tex"
+			],
+			[
+				"probleme",
+				"sections/problem.tex"
+			],
+			[
+				"denorma",
+				"sections/implementation/backend/denormalizing_the_database.tex"
+			],
+			[
+				"probe",
+				"sections/problem.tex"
+			],
+			[
+				"problem",
+				"sections/implementation/backend/gtfs_problems_and_challenges.tex"
+			],
+			[
+				"daten",
+				"sections/implementation/backend/gtfs_problems_and_challenges.tex"
+			],
+			[
+				"backend",
+				"sections/implementation/backend/backend.tex"
+			],
+			[
+				"basic",
+				"sections/basics.tex"
+			],
+			[
+				"database",
+				"sections/implementation/backend/denormalizing_the_database.tex"
+			],
+			[
+				"ap",
+				"sections/appendix.tex"
+			],
+			[
+				"app",
+				"sections/appendix.tex"
+			],
+			[
+				"mai",
+				"main.tex"
+			],
+			[
+				"shapemat",
+				"sections/implementation/backend/shape_matching.tex"
+			],
+			[
+				"shapem",
+				"images/shape_matching.psb"
+			],
+			[
+				"basi",
+				"sections/basics.tex"
+			],
+			[
+				"badkc",
+				"sections/implementation/backend/backend.tex"
+			],
+			[
 				"append",
 				"sections/appendix.tex"
 			],
 			[
+				"coverse",
+				"coversheet/coversheet.tex"
+			],
+			[
+				"outlie",
+				"outline.md"
+			],
+			[
+				"appe",
+				"sections/appendix.tex"
+			],
+			[
+				"normal",
+				"sections/implementation/backend/denormalizing_the_database.tex"
+			],
+			[
+				"prob",
+				"sections/problem.tex"
+			],
+			[
+				"data",
+				"sections/implementation/backend/gtfs_problems_and_challenges.tex"
+			],
+			[
+				"implem",
+				"sections/implementation/implementation.tex"
+			],
+			[
 				"bi",
 				"cites.bib"
+			],
+			[
+				"proble",
+				"sections/problem.tex"
+			],
+			[
+				"probl",
+				"sections/problem.tex"
+			],
+			[
+				"basics",
+				"sections/basics.tex"
+			],
+			[
+				"gtfs",
+				"sections/implementation/backend/gtfs_problems_and_challenges.tex"
+			],
+			[
+				"optim",
+				"sections/implementation/backend/optimizing_gtfs.tex"
 			],
 			[
 				"main.te",
@@ -576,10 +949,6 @@
 			[
 				"citesbib",
 				"cites.bib"
-			],
-			[
-				"main",
-				"main.tex"
 			],
 			[
 				"imple",
@@ -607,10 +976,6 @@
 			],
 			[
 				"gtfsrep",
-				"app/repositories/gtfsRepo.js"
-			],
-			[
-				"gtfs",
 				"app/repositories/gtfsRepo.js"
 			],
 			[
@@ -646,7 +1011,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 226.0,
+	"side_bar_width": 277.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

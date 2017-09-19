@@ -1,125 +1,73 @@
-\begin{newpage}
+\subsection{Begriffe}
+\label{sub:begriffe}
+  Bevor im nächsten Kapitel "`\nameref{sec:develop}"' die Umsetzung des Projekts beschriebene wird, sollen zuerst in diesem Abschnitt die wichtigsten Begriffe definiert werden, um ein Einheitliches Verständnis zu garantieren.
 
-  \subsection{Begriffe}
-  \label{sub:begriffe}
-    Nachfolgend sollen die wichtigsten Begriffe definiert werden, um ein Einheitliches Verständnis zu garantieren.
+  \subsubsection{Time}
+  \label{ssub:time}
+    In verschiedenen Formeln wird immer wieder eine Time $t$ referenziert. Diese beschreibt die Globale (aktuelle) Zeit des Systems in Sekunden. 
+    Die Sekunden lassen sich durch das Addieren der Stunden, Minuten und Sekunden errechnen.\\
 
-    \subsubsection{Time}
-    \label{ssub:time}
-      In verschiedenen Formeln wird immer wieder eine Time $t$ referenziert. Diese beschreibt die Globale (aktuelle) Zeit des Systems in Sekunden. 
-      Die Sekunden lassen sich durch das Addieren der Stunden, Minuten und Sekunden errechnen.\\
+    Bsp: 17:04:59 Uhr\\
 
-      Bsp: 17:04:59 Uhr\\
+    $t = $ Stunden $*$ 3600 $+$ Minuten $*$ 60 $+$ Sekunden\\
+    $\Rightarrow$ $t = 17 * 3600 + 4 * 60 + 59 = 61499 \; sec$
+    
+  % subsubsection time (end)
 
-      $t = $ Stunden $*$ 3600 $+$ Minuten $*$ 60 $+$ Sekunden\\
-      $\Rightarrow$ $t = 17 * 3600 + 4 * 60 + 59 = 61499 \; sec$
-      
-    % subsubsection time (end)
+  \subsubsection{Vehicle}
+  \label{ssub:vehicle}
+    Ein Vehicle $V$ beschreibt in dieser Arbeit ein Fahrzeug, welches im Dienste der öffentlichen Verkehrsbeförderung steht. Beispielsweise Bus, U- \& S-Bahn, Interrail Züge aber auch Zahnradbahn oder gar Funicular-Services\footnote{\url{https://en.wikipedia.org/wiki/Funicular}}. Das private Automobil fällt folglich nicht unter diese Definition.
+  % subsubsection vehicle (end)
 
-    \subsubsection{Vehicle}
-    \label{ssub:vehicle}
-      Ein Vehicle $V$ beschreibt in dieser Arbeit ein Fahrzeug, welches im Dienste der öffentlichen Verkehrsbeförderung steht. Beispielsweise Bus, U- \& S-Bahn, Interrail Züge aber auch Zahnradbahn oder gar Funicular-Services\footnote{\url{https://en.wikipedia.org/wiki/Funicular}}. Das private Automobil fällt folglich nicht unter diese Definition.
-    % subsubsection vehicle (end)
+  \subsubsection{Polyline}
+  \label{ssub:polyline}
+    Eine Polyline\footnote{Linienverlauf bzw auch Shape genannt} $P$ ist eine Kurve die sich durch eine Sequenz an Punkten $\{ p_1, \dotsc, p_n \;|\; n \in \mathbb{N} \}$ definiert. Sie beschreibt den zurückzulegenden Verlauf eines Vehicles.
+  % subsubsection polyline (end)
 
-    \subsubsection{Polyline}
-    \label{ssub:polyline}
-      Eine Polyline\footnote{Linienverlauf bzw auch Shape genannt} $P$ ist eine Kurve die sich durch eine Sequenz an Punkten $\{ p_1, \dotsc, p_n \;|\; n \in \mathbb{N} \}$ definiert. Sie beschreibt den zurückzulegenden Verlauf eines Vehicles.
-    % subsubsection polyline (end)
+  \subsubsection{Station}
+  \label{ssub:station}
+    Eine Station $S$ ist eine Haltestelle, die von einem Vehicle $V$ während eines Trips $T$ angefahren wird und sich entlang einer Polyline befindet. Die Station definiert dabei die Ankunfts- und Abfahrtszeiten, wann ein Vehicle an dieser Station anhaltet und wann es diese zur Weiterfahrt wieder verlässt. Ankunfts- und Abfahrtszeit seien wie folgt definiert: \texttt{arrival time} $ := t_{ari}$ und \texttt{departure time} $ := t_{dep}$.
 
-    \subsubsection{Station}
-    \label{ssub:station}
-      Eine Station $S$ ist eine Haltestelle, die von einem Vehicle $V$ während eines Trips $T$ angefahren wird und sich entlang einer Polyline befindet. Die Station definiert dabei die Ankunfts- und Abfahrtszeiten, wann ein Vehicle an dieser Station anhaltet und wann es diese zur Weiterfahrt wieder verlässt. Ankunfts- und Abfahrtszeit seien wie folgt definiert: \texttt{arrival time} $ := t_{ari}$ und \texttt{departure time} $ := t_{dep}$.
+  \subsubsection{Trip}
+  \label{ssub:trip}
+    In dieser Arbeit wird immer wieder der Begriff "`Trip"' Verwendung finden. Ein Trip $T$ sei mit folgenden Eigenschaften definiert:
+    \begin{itemize}
+      \item $T$ besteht aus einer Anzahl an Stationen: $T = \{s_1, \dotsc, s_n \;|\; s \in S, n \in \mathbb{N}, n \geq 2 \}$
 
-    \subsubsection{Trip}
-    \label{ssub:trip}
-      In dieser Arbeit wird immer wieder der Begriff "`Trip"' Verwendung finden. Ein Trip $T$ sei mit folgenden Eigenschaften definiert:
+      \item Ein Trip $T$ wird dabei von genau einem Vehicle $V$ bedient. Daraus folgt $T$ mit dem Mapping: $T \mapsto V$ ist Injektiv zu $V$. 
+
+      \item Ein Trip $T$ besitzt genau eine Polyline $P$. $T \mapsto P$ $ \Rightarrow T$ ist Injektiv zu $P$. 
+
+      \item Die Bewältigung der Strecke $\{A,B \;|\; A, B \in S\}$ entlang einer Polyline $P$ durch ein Vehicle $V$ gilt als ein einziger Trip.
+
+      \item Ein Trip beginnt genau dann, wenn die momentane Zeit $t_{cur}$ mit der Abfahrtszeit $t_{dep}$ der ersten Station übereinstimmen $\Rightarrow t_{cur} = t_{dep} $ .
+
+      \item Ein Trip endet genau dann, wenn die momentane Zeit $t_{cur}$ mit der Ankunftszeit $t_{ari}$ der letzten Station übereinstimmen $\Rightarrow t_{cur} = t_{ari} $ .
+
+      \item Der Rückweg $\{B, A \ni T \;|\; A, B \in S\}$ ist nicht in einem Trip $T$ enthalten, sondern wird als ein neuer Trip erfasst.
+    \end{itemize}
+    
+  % subsubsection trip (end)
+
+    \subsubsection{Route}
+    \label{ssub:route}
+      Eine Route $R$ besteht aus einer Anzahl an Trips $T \geq 1$. Eine Route vereint alle vorherigen Relationen in sich. Abbildung \ref{fig:gtfs_viz} veranschaulicht diese. 
+
       \begin{itemize}
-        \item $T$ besteht aus einer Anzahl an Stationen: $T = \{s_1, \dotsc, s_n \;|\; s \in S, n \in \mathbb{N}, n \geq 2 \}$
+        \item $R = \{ T_1, \dotsc, T_n \;|\; n \in \mathbb{N}, n \geq 1 \}$
 
-        \item Ein Trip $T$ wird dabei von genau einem Vehicle $V$ bedient. Daraus folgt $T$ mit dem Mapping: $T \mapsto V$ ist Injektiv zu $V$. 
+        \item $R$ mit dem Mapping: $R \mapsto T$ ist Surjektiv\footnote{Eine Route kann mehrere Trips besitzen, wohingegen ein Trip nur einer Route zugehörig sein kann} 
+      \end{itemize}     
 
-        \item Ein Trip $T$ besitzt genau eine Polyline $P$. $T \mapsto P$ $ \Rightarrow T$ ist Injektiv zu $P$. 
+      \begin{figure}[htbp]
+        \begin{center}
+          \includegraphics[width=\textwidth]{gtfs_viz.jpg}
+          \caption{Grafische Veranschaulichung einer Route}
+          \label{fig:gtfs_viz}
+        \end{center}
+      \end{figure}
 
-        \item Die Bewältigung der Strecke $\{A,B \;|\; A, B \in S\}$ entlang einer Polyline $P$ durch ein Vehicle $V$ gilt als ein einziger Trip.
+      Die Grafik zeigt, dass eine Route zum Beispiel alle Trips einer U-Bahn Linie erfasst. Eine U-Bahn Linie muss dabei nicht immer an allen Stationen halten, sondern kann beispielsweise im Nachtbetrieb auch Stationen auslassen (zu sehen bei Trip $T_2$). Trotzdem werden nur diejenigen Trips in einer Route vereint, die dem selben Routenverlauf folgen.
+    % subsubsection route (end)
 
-        \item Ein Trip beginnt genau dann, wenn die momentane Zeit $t_{cur}$ mit der Abfahrtszeit $t_{dep}$ der ersten Station übereinstimmen $\Rightarrow t_{cur} = t_{dep} $ .
-
-        \item Ein Trip endet genau dann, wenn die momentane Zeit $t_{cur}$ mit der Ankunftszeit $t_{ari}$ der letzten Station übereinstimmen $\Rightarrow t_{cur} = t_{ari} $ .
-
-        \item Der Rückweg $\{B, A \ni T \;|\; A, B \in S\}$ ist nicht in einem Trip $T$ enthalten, sondern wird als ein neuer Trip erfasst.
-      \end{itemize}
-      
-    % subsubsection trip (end)
-
-      \subsubsection{Route}
-      \label{ssub:route}
-        Eine Route $R$ besteht aus einer Anzahl an Trips $T \geq 1$. Eine Route vereint alle vorherigen Relationen in sich. Abbildung \ref{fig:gtfs_viz} veranschaulicht diese. 
-
-        \begin{itemize}
-          \item $R = \{ T_1, \dotsc, T_n \;|\; n \in \mathbb{N}, n \geq 1 \}$
-
-          \item $R$ mit dem Mapping: $R \mapsto T$ ist Surjektiv\footnote{Eine Route kann mehrere Trips besitzen, wohingegen ein Trip nur einer Route zugehörig sein kann} 
-        \end{itemize}     
-
-        \begin{figure}[htbp]
-          \begin{center}
-            \includegraphics[width=\textwidth]{gtfs_viz.jpg}
-            \caption{Grafische Veranschaulichung einer Route}
-            \label{fig:gtfs_viz}
-          \end{center}
-        \end{figure}
-
-        Die Grafik zeigt, dass eine Route zum Beispiel alle Trips einer U-Bahn Linie erfasst. Eine U-Bahn Linie muss dabei nicht immer an allen Stationen halten, sondern kann beispielsweise im Nachtbetrieb auch Stationen auslassen (zu sehen bei Trip $T_2$). Trotzdem werden nur diejenigen Trips in einer Route vereint, die dem selben Routenverlauf folgen.
-      % subsubsection route (end)
-
-  	\subsection{GTFS Datenformat}
-  	\label{ssec:gtfs_datenformat}
-  		Das GTFS (General Transit Feed Specification) ist eine Datenstandardisierung die von Google im Jahr 2006 entwickelt wurde. Vor dessen Einführung gab es weder eine einheitliche Standardisierung, noch ein "`de facto Standard"' für die Fahrpläne des Öffentlichen Nahverkehrs in den USA. GTFS ermöglichte es Transit Organisationen ihre Daten für dritte zu öffnen und ist heute das weit verbreitetste offene Datenformat für den öffentlichen Nahverkehr.\parencite[S. 2]{roush}\\
-
-      Ein GTFS Feed besteht aus mindestens 6 und maximal 13 \texttt{csv-Dateien}, die im \texttt{.txt} Format vorliegen müssen. Die Struktur eines Feeds lässt sich in Worten wie folgt beschreiben:
-
-      \begin{quote}
-        \textit{Ein GTFS Feed besteht aus einer oder mehreren Routen. Jede Route (\texttt{routes.txt}) hat einen oder mehrere Trips (\texttt{trips.txt}). Jeder Trip besucht eine Abfolge von Stops (\texttt{stops.txt}) zu einer bestimmten Zeit (\texttt{stop\_times.txt}). Trips und Stop-Zeit beinhalten nur die Tageszeit Informationen. Der Kalender (calendar.txt und \texttt{calendar\_dates.txt}) bestimmt dann, an welchen Tagen ein bestimmter Trip stattfindet.} \cite[S. 8]{zervaas}
-      \end{quote}
-
-  		Vor allem für digitale Produkte, wie zum Beispiel Trip-Planer, die viele verschiedene Fahrpläne von unterschiedlichen Unternehmen in ihren Service integrieren müssen, ist ein standardisiertes Datenformat unbedingt notwendig. 
-  		Ansonsten müsste jede App die Entwickelt wird, auf das Datenformat der jeweiligen Verkehrsunternehmen angepasst werden. Das wiederum bedeutet, dass je nach Implementierung innerhalb dieser Unternehmen, die Datenformate gänzlich voneinander abweichen können. Für jeden dieser Anbieter müsste folglich eine ganz eigene Datenverarbeitungslogik geschrieben werden.
-      Darüber hinaus könnte natürlich jedes Verkehrsunternehmen jederzeit sein eigenes Datenformat ändern, was zur Folge hat, dass ein App-Entwickler diese Änderungen auch in sein Produkt übernehmen muss. Bei einer Integration von Daten, aus beliebig vielen unterschiedlichen Verkehrsunternehmen (Beispiel: Trip-Planer für ein ganzes Land), könnten sich laufend Änderungen ergeben die integriert werden müssen, oder das eigene Produkt würde nicht mehr zuverlässig funktionieren. Dies übersteigt die Wartbarkeit und Robustheit einer App, denn sie würde möglicherweise immer dann nicht mehr funktionieren, wenn ein Dritter entscheidet sein eigenes Datenformat zu ändern. Aus diesem Grund gab es bis vor einiger Zeit nahezu keine Trip oder Routen-Planer Anwendungen die nicht von den Verkehrsunternehmen selbst stammten würden. Der Status Quo war: Jedes Verkehrsunternehmen hat seine eigene Anwendung für die Fahrplanauskunft. Unter anderem aus diesem Grund erfolge die Adaption an das neue GTFS Format sehr schnell und so sind heute die meisten öffentlich verfügbaren Fahrpläne im GTFS Format auf Plattformen wie: \url{http://transitfeeds.com} oder \url{https://transit.land/} frei verfügbar.\footnote{Momentan besitzt Transitfeeds 535 Feeds (Stand 18.08.2017)}\\
-
-      Um sich den Inhalt einer GTFS-Datei besser vorstellen zu können ist nachfolgend ist ein Auszug der \texttt{stops.txt} Tabelle abgebildet.
-
-      \begin{lstlisting}[captionpos=b, caption=Auszug der ersten Zeilen von \texttt{stops.txt}, label=lst:gtfs-auszug]
-        stop_id,stop_name,stop_lat,stop_lon
-        668,Moetzingen Bruehlstrasse,48.53249,8.775416
-        2840,Ludwigsburg Mainzer Allee,48.9018,9.21601
-        6409,Burgholzhof,48.81742,9.191285
-      \end{lstlisting}
-
-  		Da das GTFS-Format das grundlegende Datenformat für diese Arbeit ist, sollen nachfolgend kurz die wichtigsten Tabellen beschrieben werden.
-
-  		\begin{itemize}
-  			\item \texttt{agency.txt}: Beinhaltet Informationen über die Verkehrsunternehmen, welche das Feed und die Daten bereitstellen.
-
-  			\item \texttt{routes.txt}: Eine Route ist eine Gruppierung von Trips. Die verschiedenen Eigenschaften einer Route werden in dieser Tabelle gespeichert.
-
-  			\item \texttt{trips.txt}: Ein Trip gehört zu einer Route. Eine Route kann dabei beliebig viele Trips haben. Welche Trips aktiv sind wird durch den Kalender festgelegt.
-
-  			\item \texttt{calendar.txt}: Bestimmt, an welchen Tagen ein Trip aktiv ist.
-
-  			\item \texttt{stop\_times.txt}: Diese Tabelle beschreibt welche Stationen nacheinander angefahren werden. Für jede Station beinhaltet sie die Ankunfts- und Abfahrtszeiten.
-
-  			\item \texttt{stops.txt}: Stellt nähere Informationen für jede Station zur Verfügung wie zum Beispiel den Stationsnamen und deren Position.
-
-  			\item \texttt{shapes.txt}: Jeder Trip hat eine dazugehörigen Polyline.
-
-  		\end{itemize}
-
-      Ein UML-Diagramm, welches die in Relation stehenden Dateien aufzeigt, existiert unter folgender Adresse: \url{https://developers.google.com/transit/gtfs/reference/} 
-
-    % subsubsection gtfs_datenformat (end)
-
-  % subsection begriffe (end)
-
-\end{newpage}
-
-
+% subsection begriffe (end)

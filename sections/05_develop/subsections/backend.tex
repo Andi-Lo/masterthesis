@@ -1,14 +1,11 @@
 \subsection{Backend}
 \label{sub:backend}
-  Da der GTFS Standard eine fertige relationale Beziehung der einzelnen Dateien festlegt, ist der Einsatz einer relationalen Datenbank sehr naheliegend. Dabei gibt es eine breite Palette an Auswahl. Damit die Anwendung möglichst Zugänglich bleibt, liegt der Fokus auf Datenbanken die unter einer Open-source Lizenz kostenfrei zur Verfügung stehen. Die zwei populärsten sind MySQL und PostgreSQL\parencite{db_engines}. Beide haben ihre Vor- und Nachteile und die Entscheidung ist mehr eine persönliche Präferenz, als ein großer Vorteil des Einen über den Anderen. Einen kleinen Vorteil bietet PostgreSQL's Unterstützung für Array-Types, welche sehr hilfreich beim speichern und abfragen von Daten ist. Ansonsten ist dieses Projekt auch mit MySQL realisierbar.\\
-
-  In diesem Abschnitt soll beschrieben werden, welche Probleme beim Arbeiten mit dem GTFS Datenformat und einer PostgreSQL Datenbank bestehen und wie diese gelöst sind. Dabei steht vor allem die Behebung von Engpässen bei der Query\footnotemark Performance, als auch die Verringerung der zu verarbeitenden Datenmenge. Sektion \ref{ssub:gtfs_probleme_und_herausforderungen} beschreibt die generelle Problematik, dass durch die Verwendung des GTFS Formats im Backend entsteht. Die folgenden Abschnitte fokussieren sich darauf dieses Problem zu lösen. Abschnitt "`\nameref{ssub:gtfs_optimierungen}"' zeigt verschiedene GTFS Optimierungsschritte. Darauf folgt die Verbesserung von Polylines in Abschnitt \ref{ssub:polyline_optimieren} und endet mit der Denormalisierung von Datenbanktabellen im letzten Abschnitt \ref{ssub:denormalisierung_der_datenbank}.
+  In diesem Abschnitt soll beschrieben werden, welche Probleme beim Arbeiten mit dem GTFS Datenformat und einer PostgreSQL Datenbank bestehen und wie diese gelöst sind. Dabei steht vor allem die Behebung von Engpässen bei der Query\footnotemark Performance, als auch die Verringerung der zu verarbeitenden Datenmenge. Sektion \ref{ssub:freiräume_in_der_gestaltung_von_gtfs} beschreibt die generelle Problematik, dass durch die Verwendung des GTFS Formats im Backend entsteht. Die folgenden Abschnitte fokussieren sich darauf dieses Problem zu lösen. Abschnitt "`\nameref{ssub:gtfs_optimierungen}"' zeigt verschiedene GTFS Optimierungsschritte. Darauf folgt die Verbesserung von Polylines in Abschnitt \ref{ssub:polyline_optimieren} und endet mit der Denormalisierung von Datenbanktabellen im letzten Abschnitt \ref{ssub:denormalisierung_der_datenbank}.
 
   \footnotetext{Ein Query ist eine Informationsanfrage an eine Datenbank} 
   
   % Gliederung eventuell nochmals beschreiben.
 
-  \input{sections/05_develop/subsections/backend/gtfs_problems_and_challenges}
   \input{sections/05_develop/subsections/backend/optimizing_gtfs}
   \input{sections/05_develop/subsections/backend/optimizing_polylines}
   \input{sections/05_develop/subsections/backend/denormalizing_the_database}

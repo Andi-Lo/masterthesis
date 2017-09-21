@@ -1,16 +1,16 @@
-\subsection{Begriffe}
+\subsection{Begriffe und Definitionen}
 \label{sub:begriffe}
-  Bevor im nächsten Kapitel "`\nameref{sec:develop}"' die Umsetzung des Projekts beschriebene wird, sollen zuerst in diesem Abschnitt die wichtigsten Begriffe definiert werden, um ein Einheitliches Verständnis zu garantieren.
+  Bevor im nächsten Kapitel "`\nameref{sec:develop}"' die Umsetzung des Projekts beschriebene wird, sollen zuerst die Begrifflichkeiten und Definitionen festgelegt werden, um ein einheitliches Verständnis zu garantieren.
 
   \subsubsection{Time}
   \label{ssub:time}
-    In verschiedenen Formeln wird immer wieder eine Time $t$ referenziert. Diese beschreibt die Globale (aktuelle) Zeit des Systems in Sekunden. 
+    In verschiedenen Formeln wird immer wieder eine Time $t_{cur}$ referenziert. Diese beschreibt die Globale (aktuelle) Zeit des Systems in Sekunden. 
     Die Sekunden lassen sich durch das Addieren der Stunden, Minuten und Sekunden errechnen.\\
 
     Bsp: 17:04:59 Uhr\\
 
-    $t = $ Stunden $*$ 3600 $+$ Minuten $*$ 60 $+$ Sekunden\\
-    $\Rightarrow$ $t = 17 * 3600 + 4 * 60 + 59 = 61499 \; sec$
+    $t_{cur} = $ Stunden $*$ 3600 $+$ Minuten $*$ 60 $+$ Sekunden\\
+    $\Rightarrow$ $t_{cur} = 17 * 3600 + 4 * 60 + 59 = 61499 \; sec$
     
   % subsubsection time (end)
 
@@ -32,7 +32,7 @@
   \label{ssub:trip}
     In dieser Arbeit wird immer wieder der Begriff "`Trip"' Verwendung finden. Ein Trip $T$ sei mit folgenden Eigenschaften definiert:
     \begin{itemize}
-      \item $T$ besteht aus einer Anzahl an Stationen: $T = \{s_1, \dotsc, s_n \;|\; s \in S, n \in \mathbb{N}, n \geq 2 \}$
+      \item $T$ besteht aus einer Anzahl an Stationen: $T = \{S_1, \dotsc, S_n \;|\; n \in \mathbb{N}, n \geq 2 \}$
 
       \item Ein Trip $T$ wird dabei von genau einem Vehicle $V$ bedient. Daraus folgt $T$ mit dem Mapping: $T \mapsto V$ ist Injektiv zu $V$. 
 

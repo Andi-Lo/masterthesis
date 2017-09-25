@@ -14,6 +14,10 @@
 *.synctex.gz
 *.tex.bbl
 *.tex.blg
+*.loa
+*.lof
+*.lol
+*.lot
 cites.blg
 *.cites.bbl
 .DS_Store

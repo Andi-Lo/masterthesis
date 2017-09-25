@@ -79,7 +79,9 @@
   \begin{itemize}
     \item \textbf{Daten Mapping:} Die Trips aus der Datenbank werden in das \texttt{GeoJSON}-Format umgewandelt, damit diese im weiteren Programmverlauf einfacher zu verarbeiten sind. Dabei werden die im Kapitel "`\ref{sub:begriffe} \nameref{sub:begriffe}"' festgelegten Regeln beachtet.
 
-    \item \textbf{Zurückgelegte Distanz:} Damit eine Animation der Vehicle stattfinden kann, ist die Berechnung der Distanzen zwischen den einzelnen Stationen nötig. Falls das Feld \texttt{dist\_traveled}\footnotemark in der Datenbank vorhanden ist, kann die zurückgelegte Distanz sehr einfach daraus berechnet werden. Ist dies nicht der Fall so wird ein Station Matching durchgeführt, um die Distanzen berechnen zu können.
+    \item \textbf{Zurückgelegte Distanz:} Damit eine Animation der Vehicle stattfinden kann, ist die Berechnung der Distanzen zwischen den einzelnen Stationen nötig. 
+
+    Falls das Feld dist\_traveled\footnotemark in der Datenbank vorhanden ist, kann die zurückgelegte Distanz sehr einfach daraus berechnet werden. Ist dies nicht der Fall so wird das in Abschnitt \ref{ssub:station_matching} beschriebene Station Matching durchgeführt, um die Distanzen berechnen zu können.
     \footnotetext{Die zurückgelegte Distanz bis zu einer Station $S$}
 
     \item \textbf{Feststellen der Richtung:} Für eine Polyline ist es unerheblich, ob die Koordinaten in der Reihenfolge $\{ p_1, p_2, \dotsc, p_n \}$ oder $\{ p_n, \dotsc, p_2, p_1 \}$ angeordnet sind. Damit das Vehicle aber in die richtige Richtung von $A$ nach $B$ fährt, ist es wichtig, dass die Koordinaten der Polyline in aufsteigender Reihenfolge festgelegt werden. Falls dies nicht er Fall ist, werden die Koordinaten in ihrer Reihenfolge umgekehrt.
@@ -90,36 +92,5 @@
 
     \item \textbf{Versenden:} Zuletzt wird die Anfrage des Clients vom Server mit einem Response-Paket beantwortet und der Prozess ist damit abgeschlossen bis eine neue Anfrage den Server erreicht.
   \end{itemize}
-
-  
-
-  % \subsection{Backend Performance}
-  % \label{ssub:backend_performance}
-  %   In diesem Abschnitt soll das gesamte Backend (Server und Datenbank) evaluiert werden. Dazu werden sowohl die Zeit zum Abfragen der Datenbank, als auch die Zeit zur Datenverarbeitung auf dem Server betrachtet werden.
-
-  %   \begin{longtable}{|>{\raggedright \arraybackslash}p{4.5cm}|>{\raggedright \arraybackslash}p{1.2cm}|>{\raggedright \arraybackslash}p{1.2cm}|>{\raggedright \arraybackslash}p{1.2cm}|>{\raggedright \arraybackslash}p{1.2cm}|>{\raggedright \arraybackslash}p{1.2cm}|>{\raggedright \arraybackslash}p{1.2cm}|}
-  %   \caption{Backend Evaluation}\label{tbl:backend_evaluation}\\
-  %     \hline
-  %     Anz. Trips & 20 & 100 & 500 & 1000 & 5000 & 10000\\
-  %     \hline
-  %     Query Zeit (ms)        & 25 & 88 & 124 & 200 & 855 & 1631 \\
-  %     Verarbeitungszeit (ms) & 2 & 27 & 40 & 142 & 226 & 435 \\
-  %     Summe (ms)             & 27 & 115 & 164 & 342 & 1081 & 2066 \\
-  %     \hline
-  %   \end{longtable}
-
-  %   In Tabelle \ref{tbl:backend_evaluation} sind die Datenwerte für verschiedene Abfragen aufgelistet. Die Werte ergeben sich aus dem Mittelwert der Laufzeit in 10 Durchläufen. Wie bereits in Kapitel "`\nameref{ssub:bewältigung_der_datenmenge}"' festgestellt:
-
-  %   \begin{quote}
-  %     \textit{"`In einer Minute [werden] minimal 0 und maximal 27 Vehicle aktiv. Im Schnitt starten 9 Vehicles pro Minute ihre Fahrt."'}\ref{ssub:bewältigung_der_datenmenge}
-  %   \end{quote}
-
-  %   Aus dieser Aussage plus den gemessenen Werten lässt sich folgende Schlussfolgerung ziehen: Bei einer Anzahl zwischen 20 und 100 Trips reagiert der Server innerhalb von 25 bis $120ms$. Da die meisten Trips in diese Spanne fallen, ist dieses Ergebnis am bedeutendsten. 
-
-  %   Im Bereich von 100 bis 500 Trips ist eine Antwortzeit von 115 bis $164ms$ immer noch sehr gut. Diese Anzahl an Trips ist dann relevant, wenn die Applikation das erste Mal aufgerufen wird und die Karte noch leer ist. In diesem Fall kann es sein, dass der Server (je nach Datum und Uhrzeit) zwischen 200 - 500 Trips verarbeiten muss. Aber selbst Abfragen von bis zu 10.000 Trips, was ungefähr einer Zeitspanne von einem Tag gleich kommt, sind immer noch innerhalb von 2 Sekunden verarbeitet.\\
-
-  %   Abschließend kann gesagt werden, dass in dieser Arbeit ein performantes Backendsystem für eine Web Applikation entwickelt worden ist, welches Serveranfragen effizient be- und verarbeiten kann.
-
-  % subsubsection backend_performance (end)
     
 % subsection funktionsprinzip (end)

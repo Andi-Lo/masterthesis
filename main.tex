@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper,onehalfspacing,oneside,ngerman]{article}
+\documentclass[11pt,a4paper,onehalfspacing,oneside,ngerman]{article}
 \usepackage[left=4cm,right=1.5cm,top=2.5cm,headheight=15.1pt]{geometry}
 \usepackage[hyphens]{url}
 \usepackage[backend=biber,style=numeric,backref=true,citecounter=true,citestyle=numeric]{biblatex}
@@ -26,9 +26,15 @@
 \usepackage{amsmath}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{datetime}
+\usepackage[nottoc,numbib]{tocbibind}
 \addbibresource{cites.bib}
 \pagestyle{empty}
 \author{Andreas Lorer}
+
+
+\newdateformat{monthyeardate}{%
+  \monthname[\THEMONTH], \THEYEAR}
 
 \chardef\_=`_
 
@@ -141,8 +147,9 @@
 	%Coversheet
   % Former: Real-Time Transit Map Visualization
   \newcommand{\headline}{GTFS Live Vehicle Position \\ Map Visualization}
-  \newcommand{\subheadline}{}
-	\input{coversheet/coversheet}
+	\hypersetup{pageanchor=false}
+  \input{coversheet/coversheet.tex}
+  \hypersetup{pageanchor=true}
   \input{sections/01_abstract/abstract}
 
 	%Table of contents
@@ -152,23 +159,25 @@
   \pagestyle{fancy}
   \fancyhf{}
   \rhead{}
-  \lhead{\leftmark}
+  \lhead{}
   \rfoot{\thepage}
-  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\headrulewidth}{0pt}
   \renewcommand{\footrulewidth}{0pt}
 
-  \input{sections/01_abstract/abstract}
   \input{sections/02_introduction/introduction}
-  \input{sections/03_discover/discover}
-  \input{sections/04_define/define}
-  \input{sections/05_develop/develop}
-  \input{sections/06_deliver/deliver}
-  % \input{sections/07_conclusion/results}
-  \input{sections/07_conclusion/fazit}
-  \input{sections/08_appendix/affidavit}
 
-	\printbibliography
+  \input{sections/03_discover/discover}
+
+  \input{sections/04_define/define}
+
+  \input{sections/05_develop/develop}
+
+  \input{sections/06_deliver/deliver}
+
+  \input{sections/07_conclusion/fazit}
 
   \input{sections/08_appendix/appendix}
+  \input{sections/08_appendix/references}
+  \input{sections/08_appendix/affidavit}
 
 \end{document}

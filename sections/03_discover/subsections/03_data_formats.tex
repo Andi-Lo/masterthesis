@@ -2,43 +2,43 @@
 \label{sub:mögliche_datengrundlage_und_format}
   Für eine Visualisierung von Öffentlichen Verkehrsmittel wären mehrere Ansätze denkbar. Einige davon sollen nachfolgend beschrieben werden.
 
-  \subsubsection{Einsatz von GPS Daten}
+  \subsubsection{Einsatz von GPS-Daten}
   \label{ssub:einsatz_von_gps_daten}
-    Eine Möglichkeit ist eine GPS basierte Visualisierung der Echtzeitpositionen der Vehicle. Dies ist eine exakte Abbildung des momentanen Zustandes des Verkehrsnetzes und entspricht am ehesten einer Abbildung des realen "`Ist"'-Zustands. Die einzelnen Vehicle würden in einem festen Intervall von n-Sekunden ihre Position senden, welche sich dann auf einer Karte anzeigen ließe. Je nach Frequenz des Aktualisierungsintervalls, wäre das Ergebnis der Position genauer oder ungenauer.
+    Eine Möglichkeit ist eine GPS-basierte Visualisierung der Echtzeitpositionen der Vehicle. Dies ist eine exakte Abbildung des momentanen Zustandes des Verkehrsnetzes und entspricht am ehesten einer Abbildung des realen "`Ist"'-Zustands. Die einzelnen Vehicle würden in einem festen Intervall von n-Sekunden ihre Position senden, welche sich dann auf einer Karte anzeigen ließe. Je nach Frequenz des Aktualisierungsintervalls, wäre das Ergebnis der Position genauer oder ungenauer.
 
     Der Einstaz von GPS hat aber allerlei Schwachstellen, die auf den ersten Blick vielleicht nicht offensichtlich sind.
 
     \begin{itemize}[label={}]
       \item \textbf{Fehlende Datenverfügbarkeit:}
-        Ein Weg, um Echtzeitdaten zu visualisieren, wäre die Verarbeitung von GPS Daten, die von den jeweiligen Verkehrsverbünden zur Verfügung gestellt werden müssten. Dies ist allerdings nicht der Fall. Zwar gibt es durchaus eine Erfassung der öffentlichen Verkehrsmittel, allerdings werden diese nicht für Dritte zur Verfügung gestellt. Die HaCon GmbH sammelt beispielsweise solche Daten, indem sie diese durch in den Fahrzeugen integrierte Software berechnet.\parencite{havasBusradar}. Es wären also GPS Daten vorhanden, da sie unter anderem im Bus-Radar der Deutschen Bahn (entwickelt von HaCon) verwendet werden, sie sind allerdings weder über eine API noch anderweitig für die Öffentlichkeit erhältlich. Über die rechtlichen Belange und ob solche Daten in Deutschland überhaupt öffentlich gemacht werden dürften, soll an dieser Stelle nicht diskutiert werden\footnote{In \textit{"`Opening Public Transit Data in Germany"'} von Stefan Kaufmann\parencite{kaufmann} wird dieses Thema der Rechtslage näher betrachtet.}.
+        Ein Weg, um Echtzeitdaten zu visualisieren, wäre die Verarbeitung von GPS-Daten, die von den jeweiligen Verkehrsverbünden zur Verfügung gestellt werden müssten. Dies ist allerdings nicht der Fall. Zwar gibt es durchaus eine Erfassung der Öffentlichen Verkehrsmittel, allerdings werden diese nicht für Dritte zur Verfügung gestellt. Die HaCon GmbH sammelt beispielsweise solche Daten, indem sie diese durch in den Fahrzeugen integrierte Software berechnet.\parencite{havasBusradar}. Es wären also GPS-Daten vorhanden, da sie unter anderem im Bus-Radar der Deutschen Bahn (entwickelt von HaCon) verwendet werden, sie sind allerdings weder über eine API noch anderweitig für die Öffentlichkeit erhältlich. Über die rechtlichen Belange und ob solche Daten in Deutschland überhaupt öffentlich gemacht werden dürften, soll an dieser Stelle nicht diskutiert werden\footnote{In \textit{"`Opening Public Transit Data in Germany"'} von Stefan Kaufmann\parencite{kaufmann} wird dieses Thema der Rechtslage näher betrachtet.}.
 
       \item \textbf{Aktualisierungsintervall:}
-        Abseits der fehlenden Beschaffung von GPS Daten haben diese noch einen weiteren Nachteil. Vehicle, die mit einer GPS Lokalisierung ausgestattet sind, senden keinen kontinuierlichen Strom an Daten, sondern nur in einem gewissen Aktualisierungsintervall. Zwar preist HaCon seinen Busradar durch folgende Aussage an: 
+        Abseits der fehlenden Beschaffung von GPS-Daten haben diese noch einen weiteren Nachteil. Vehicle, die mit einer GPS-Lokalisierung ausgestattet sind, senden keinen kontinuierlichen Strom an Daten, sondern nur in einem gewissen Aktualisierungsintervall. Zwar preist HaCon seinen Busradar durch folgende Aussage an: 
 
         \begin{quote}
           \textit{"`Der neue Busradar eignet sich hervorragend, um die eigene Fahrt zu visualisieren und Anschlussfahrzeuge zu verfolgen. Erstmals geschieht dies GPS-basiert und nicht durch interpolierte Echtzeitdaten, was eine noch höhere Genauigkeit zur Folge hat."'}\parencite{havasBusradar}
         \end{quote}
 
-        Nähme man aber nur die GPS Daten als Basis für eine Visualisierung, so würde der Bus bei jeder Aktualisierung von der jeweils vorherigen Position zur nächsten springen. Dieses "`Springen"' kann beim Busradar dann auch dazu führen, dass der Nutzer einen Bus auf seiner App verfolgen will, aber dieser nach dem nächsten GPS Update nicht mehr auf dem Display zu sehen ist, da er nun außerhalb des Viewports liegt. Dieses Verhalten kann den Nutzer durchaus verwirren, da nicht klar ist, in welche Richtung sich das Vehicle bewegt hat, sodass in alle Richtung gesucht werden muss.
+        Nähme man aber nur die GPS-Daten als Basis für eine Visualisierung, so würde der Bus bei jeder Aktualisierung von der jeweils vorherigen Position zur nächsten springen. Dieses "`Springen"' kann beim Busradar dann auch dazu führen, dass der Nutzer einen Bus auf seiner App verfolgen will, aber dieser nach dem nächsten GPS-Update nicht mehr auf dem Display zu sehen ist, da er nun außerhalb des Viewports liegt. Dieses Verhalten kann den Nutzer durchaus verwirren, da nicht klar ist, in welche Richtung sich das Vehicle bewegt hat, sodass in alle Richtung gesucht werden muss.
 
       \item \textbf{Verlässlichkeit \& Verfügbarkeit:} 
-        Zudem sind GPS Signale nicht immer verlässlich. Sie können oftmals gestört werden oder die Verbindung zum Satelliten verlieren. Wie würde sich in einem solchen Fall des Signalverlusts die Live Visualisierung verhalten? Verschwindet das Vehicle von der Karte oder bleibt es für längere Zeit auf der Stelle stehen? Beide Möglichkeiten erscheinen als nicht optimal. 
+        Zudem sind GPS-Signale nicht immer verlässlich. Sie können oftmals gestört werden oder die Verbindung zum Satelliten verlieren. Wie würde sich in einem solchen Fall des Signalverlusts die Live-Visualisierung verhalten? Verschwindet das Vehicle von der Karte oder bleibt es für längere Zeit auf der Stelle stehen? Beide Möglichkeiten erscheinen als nicht optimal. 
 
-        Zuletzt sei erwähnt, dass ein GPS basiertes System für U- und S-Bahn erst gar nicht infrage käme, da diese unterirdisch verlaufen und andere Technologien für deren Erfassung eingesetzt werden müssten. Für eine Live Karte, die nicht nur Busse, sondern auch andere Verkehrsmittel abbilden möchte, ist die GPS basierte Lokalisierung folglich nicht zielführend. 
+        Zuletzt sei erwähnt, dass ein GPS-basiertes System für U- und S-Bahn erst gar nicht infrage käme, da diese unterirdisch verlaufen und andere Technologien für deren Erfassung eingesetzt werden müssten. Für eine Live-Karte, die nicht nur Busse, sondern auch andere Verkehrsmittel abbilden möchte, ist die GPS-basierte Lokalisierung folglich nicht zielführend. 
 
         % (FLEET MANAGEMENT ?)Für Unternehmen allerdings kann eine Visualisierung der eigenen Fleets über die privaten GPS Daten   Eine Visualisierung im Fleet-Management allerdings 
     \end{itemize} 
 
   % subsection einsatz_von_gps_daten (end)
 
-    \subsubsection{GTFS Fahrplandaten}
+    \subsubsection{GTFS-Fahrplandaten}
     \label{ssub:gtfs_fahrplandaten}
-      Das GTFS (General Transit Feed Specification) ist eine Datenstandardisierung, die von Google im Jahr 2006 entwickelt wurde. Vor dessen Einführung gab es weder eine einheitliche Standardisierung, noch ein "`de facto Standard"' für die Fahrpläne des Öffentlichen Nahverkehrs in den USA. Unter anderem aus diesem Grund erfolge die Adaption an das neue GTFS Format sehr schnell. Vor allem für digitale Produkte, wie zum Beispiel Trip-Planer, die viele verschiedene Fahrpläne von unterschiedlichen Unternehmen in ihren Service integrieren müssen, ist ein standardisiertes Datenformat unbedingt notwendig. Heute sind die meisten öffentlich verfügbaren Fahrpläne im GTFS Format auf Plattformen wie: \url{http://transitfeeds.com} oder \url{https://transit.land/} frei verfügbar.\footnote{Momentan besitzt Transitfeeds 535 Feeds (Stand 18.08.2017)}. GTFS ermöglichte es Transit Organisationen, ihre Daten für Dritte zu öffnen und ist heute das weit verbreitetste offene Datenformat für den Öffentlichen Nahverkehr\footnote{Dies gilt allerdings nicht für Deutschland, hier bieten zum jetzigen Zeitpunkt nur 3 Verkehrsunternehmen ein öffentliches GTFS Feed an}.\parencite[S. 2]{roush}\\
+      Das GTFS (General Transit Feed Specification) ist eine Datenstandardisierung, die von Google im Jahr 2006 entwickelt wurde. Vor dessen Einführung gab es weder eine einheitliche Standardisierung, noch ein "`de facto Standard"' für die Fahrpläne des Öffentlichen Nahverkehrs in den USA. Unter anderem aus diesem Grund erfolge die Adaption an das neue GTFS-Format sehr schnell. Vor allem für digitale Produkte, wie zum Beispiel Trip-Planer, die viele verschiedene Fahrpläne von unterschiedlichen Unternehmen in ihren Service integrieren müssen, ist ein standardisiertes Datenformat unbedingt notwendig. Heute sind die meisten öffentlich verfügbaren Fahrpläne im GTFS-Format auf Plattformen wie: \url{http://transitfeeds.com} oder \url{https://transit.land/} frei verfügbar.\footnote{Momentan besitzt Transitfeeds 535 Feeds (Stand 18.08.2017)}. GTFS ermöglichte es Transit Organisationen, ihre Daten für Dritte zu öffnen und ist heute das weit verbreitetste offene Datenformat für den Öffentlichen Nahverkehr\footnote{Dies gilt allerdings nicht für Deutschland, hier bieten zum jetzigen Zeitpunkt nur 3 Verkehrsunternehmen ein öffentliches GTFS-Feed an}.\parencite[S. 2]{roush}\\
 
-      Ein GTFS Feed besteht aus mindestens 6 und maximal 13 \texttt{csv-Dateien}, die im \texttt{.txt} Format vorliegen müssen. Die Struktur eines Feeds lässt sich in Worten wie folgt beschreiben:
+      Ein GTFS-Feed besteht aus mindestens 6 und maximal 13 \texttt{csv-Dateien}, die im \texttt{.txt} Format vorliegen müssen. Die Struktur eines Feeds lässt sich in Worten wie folgt beschreiben:
 
       \begin{quote}
-        \textit{Ein GTFS Feed besteht aus einer oder mehreren Routen. Jede Route (\texttt{routes.txt}) hat einen oder mehrere Trips (\texttt{trips.txt}). Jeder Trip besucht eine Abfolge von Stops (\texttt{stops.txt}) zu einer bestimmten Zeit (\texttt{stop\_times.txt}). Trips und Stop-Zeit beinhalten nur die Tageszeitinformationen. Der Kalender (calendar.txt und \texttt{calendar\_dates.txt}) bestimmt dann, an welchen Tagen ein bestimmter Trip stattfindet.} \cite[S. 8]{zervaas}
+        \textit{Ein GTFS-Feed besteht aus einer oder mehreren Routen. Jede Route (\texttt{routes.txt}) hat einen oder mehrere Trips (\texttt{trips.txt}). Jeder Trip besucht eine Abfolge von Stops (\texttt{stops.txt}) zu einer bestimmten Zeit (\texttt{stop\_times.txt}). Trips und Stop-Zeit beinhalten nur die Tageszeitinformationen. Der Kalender (calendar.txt und \texttt{calendar\_dates.txt}) bestimmt dann, an welchen Tagen ein bestimmter Trip stattfindet.} \cite[S. 8]{zervaas}
       \end{quote}
 
       Um sich den Inhalt einer GTFS-Datei besser vorstellen zu können, ist nachfolgend ein Auszug der \texttt{stops.txt} Tabelle abgebildet.
@@ -53,17 +53,17 @@
       Nachfolgend sind kurz die wichtigsten Tabellen beschrieben.
 
       \begin{itemize}
-        \item \texttt{agency.txt}: Beinhaltet Informationen über die Verkehrsunternehmen, welche das Feed und die Daten bereitstellen.
+        \item \texttt{agency.txt} beinhaltet Informationen über die Verkehrsunternehmen, welche das Feed und die Daten bereitstellen.
 
         \item \texttt{routes.txt}: Eine Route ist eine Gruppierung von Trips. Die verschiedenen Eigenschaften einer Route werden in dieser Tabelle gespeichert.
 
         \item \texttt{trips.txt}: Ein Trip gehört zu einer Route. Eine Route kann dabei beliebig viele Trips haben. Welche Trips aktiv sind, wird durch den Kalender festgelegt.
 
-        \item \texttt{calendar.txt}: Bestimmt, an welchen Tagen ein Trip aktiv ist.
+        \item \texttt{calendar.txt} bestimmt, an welchen Tagen ein Trip aktiv ist.
 
         \item \texttt{stop\_times.txt}: Diese Tabelle beschreibt, welche Stationen nacheinander angefahren werden. Für jede Station beinhaltet sie die Ankunfts- und Abfahrtszeiten.
 
-        \item \texttt{stops.txt}: Stellt nähere Informationen für jede Station zur Verfügung wie zum Beispiel den Stationsnamen und deren Position.
+        \item \texttt{stops.txt} stellt nähere Informationen für jede Station zur Verfügung wie zum Beispiel den Stationsnamen und deren Position.
 
         \item \texttt{shapes.txt}: Jeder Trip hat eine dazugehörigen Polyline.
 
@@ -73,14 +73,14 @@
 
       \subsubsection*{Fehlende Echtzeitkomponente}
       \label{ssub:fehlende_echtzeitkomponente}
-        Aber auch GTFS besitzt Nachteile. Für eine Live Visualisierung fehlt ihr die Echtzeitkomponente. Die Fahrplandaten stellen nur einen \texttt{Soll-Zustand} dar, der erheblich vom \texttt{Ist-Zustand} abweichen kann. Die reale Position eines Vehicles kann somit nicht wiedergegeben werden, da die tatsächliche Verkehrslage nicht berücksichtigt wird. Dies wirkt sich besonders dann nachteilig aus, wenn Verkehrsmittel sich aufgrund von Staus oder sonstigen Verzögerungen verspäten, Verkehrsmittel ganz ausfallen oder aufgrund von Baustellen etc. umgeleitet werden müssen. Solche außerfahrplanmäßigen Vorkommnisse kann die Visualisierung ohne Echtzeitkomponente nicht bewältigen.
+        Aber auch GTFS besitzt Nachteile. Für eine Live-Visualisierung fehlt ihr die Echtzeitkomponente. Die Fahrplandaten stellen nur einen \texttt{Soll-Zustand} dar, der erheblich vom \texttt{Ist-Zustand} abweichen kann. Die reale Position eines Vehicles kann somit nicht wiedergegeben werden, da die tatsächliche Verkehrslage nicht berücksichtigt wird. Dies wirkt sich besonders dann nachteilig aus, wenn Verkehrsmittel sich aufgrund von Staus oder sonstigen Verzögerungen verspäten, Verkehrsmittel ganz ausfallen oder aufgrund von Baustellen etc. umgeleitet werden müssen. Solche außerfahrplanmäßigen Vorkommnisse kann die Visualisierung ohne Echtzeitkomponente nicht bewältigen.
         Auch die Geschwindigkeit eines Vehicles entspricht bei einer Interpolation lediglich der Durchschnittsgeschwindigkeit, die sich anhand der Fahrplandaten ausrechnen lässt. Benötigt ein Vehicle $V$ von Station A nach B 3 Minuten für eine Strecke von 1.2 Kilometer, so würde die Animation eine durchschnittliche Geschwindigkeit von $v = \frac{s}{t} = \frac{1.2 \: \cdot \: 1000}{3 \: \cdot \: 60} = 6.6 \: \frac{m}{s} = 23.76 \: \frac{km}{h}$ errechnen. Diese kann zwar in vielen Fällen wie bspw. dem Schienen- oder Überlandsverkehr zutreffen, berücksichtigt aber im Stadtverkehr weder Geschwindigkeitsbegrenzungen noch Wartezeiten an Kreuzungen. 
 
       % ssub:fehlende_echtzeitkomponente (end)
 
       \subsubsection*{Uneinheitliche Gestaltung von GTFS}
       \label{ssub:uneinheitliche_gestaltung_von_gtfs}
-        Trotz der Standardisierung durch GTFS gibt es immer noch diverse Freiräume in der Umsetzung des Formats. Wie anfangs erwähnt wurde, beträgt die Anzahl der Dateien, die für ein gültiges GTFS Feed benötigt werden, nur 6. Es sind allerdings bis zu 13 Dateien möglich. Dies zeigt, wie viele unterschiedliche Informationen ein GTFS Feed bereitstellen kann, aber nicht muss. 
+        Trotz der Standardisierung durch GTFS gibt es immer noch diverse Freiräume in der Umsetzung des Formats. Wie anfangs erwähnt wurde, beträgt die Anzahl der Dateien, die für ein gültiges GTFS-Feed benötigt werden, nur 6. Es sind allerdings bis zu 13 Dateien möglich. Dies zeigt, wie viele unterschiedliche Informationen ein GTFS Feed bereitstellen kann, aber nicht muss. 
         Auch innerhalb der Dateien gibt es Felder, die vorhanden sein "`müssen"' oder nur "`dürfen"'. Beispielsweise muss das Feld \texttt{route\_short\_name} in \texttt{routes.txt} vorhanden sein, aber \texttt{route\_desc} (Route Description) nicht. Der Interpretationsspielraum lässt sich aber noch weiter veranschaulichen, wenn wir uns Tabelle ~\ref{table:gtfs_differences} ansehen. In dieser Tabelle sind zwei Einträge aus unterschiedlichen GTFS Feeds aufgelistet.
         Wir sehen, dass die Spalte \texttt{route\_id} bei Stuttgart-VVS als Zahlenwert angegeben wird, wohingegen Boston-MBTA einen Text verwendet.
 

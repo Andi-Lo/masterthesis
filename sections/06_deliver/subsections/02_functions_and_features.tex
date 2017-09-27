@@ -8,7 +8,7 @@
 
     \begin{figure}[htbp]
       \begin{center}
-        \includegraphics[width=0.6\textwidth]{map}
+        \includegraphics[width=\textwidth]{rtt-map}
         \caption{Die Karte mit angepasstem Style: Mapbox-Dark}
         \label{fig:map}
       \end{center}
@@ -30,7 +30,6 @@
       \caption{Vehicle Status Anzeige}
       \label{fig:vehicle_states}
     \end{figure}
-
     
     Ist ein Vehicle dabei, seinen Trip innerhalb von 30 Sekunden zu beenden, so wird ein leicht transparentes Pulsieren angezeigt. Nachdem das Vehicle den Trip beendet hat, wird es von der Karte genommen und verschwindet. Technisch betrachtet, werden erst alle Referenzen auf das Vehicle beseitigt und anschließend das Vehicle-Objekt gelöscht.
     
@@ -52,6 +51,44 @@
     
   % subsubsection zeitstrahl (end)
 
+  \subsubsection*{Wechseln der Kartendarstellung}
+  \label{ssub:style_auswahl}
+    Über das \texttt{Switch Style} Element {\Large \inlinegraphics{switch_styles_symbol}} hat der Anwender die Möglichkeit, zwischen verschiedenen Darstellungsarten der Karte zu wechseln. Auch die Polylines der Routen lassen sich zusätzlich über das Anwählen von \texttt{Shape} ein- oder ausblenden. Standardmäßig ist \texttt{Dark} ausgewählt.
+
+    \begin{figure}[htbp]
+      \begin{center}
+        \includegraphics[width=0.1\textwidth]{switch_styles}
+        \caption{Wechseln zwischen verschiedenen Kartendarstellung}
+        \label{fig:switch_styles}
+      \end{center}
+    \end{figure}
+
+    Vier verschiedene Kartenstile stehen zur Auswahl: Dark, Streets, Light und Contrast (Abbildung \ref{fig:layers}).
+
+    \begin{figure}[htbp]
+      \begin{center}
+        \includegraphics[width=\textwidth]{layers.jpg}
+        \caption{Verschiedene Auswahlmöglichkeiten der Kartendarstellung}
+        \label{fig:layers}
+      \end{center}
+    \end{figure}
+    
+  % subsubsection style_auswahl (end)
+
+  \subsubsection*{Anzeigen von Trip Informationen}
+  \label{ssub:anzeigen_von_trip_informationen}
+    Wenn der Anwender ein Vehicle in der Karte durch Klicken auswählt, öffnet sich ein Fenster, welches Informationen für diesen Trip anzeigt (Abbildung \ref{fig:trip_information}. Neben dem Namen der Route lässt sich im Kreis (hier in Rot) die Routen Nummer ablesen. Im unteren Bereich sind die Fahrplaninformationen für den Trip gelistet. Neben dem Namen der Station ist auch die Abfahrtzeit des Vehicles gelistet. Die bereits besuchten Stationen werden in einem Grauton dargestellt, um sie als inaktiv zu markieren.
+
+    \begin{figure}[htbp]
+      \begin{center}
+        \includegraphics[width=0.23\textwidth]{trip_information}
+        \caption{Anzeigen von Trip Informationen}
+        \label{fig:trip_information}
+      \end{center}
+    \end{figure}
+    
+  % subsubsection anzeigen_von_trip_informationen (end)
+
   \subsubsection*{Filter}
   \label{ssub:filter}
     Über ein ausklappbares Menü lassen sich verschiedene Filter auswählen. Dadurch kann der Anwender zum Beispiel alle Vehicle eines Typs oder einer Linie abrufen. Auch Kombinationen der \texttt{Filter Vehicles} und \texttt{Filter Lines} sind möglich.
@@ -60,41 +97,13 @@
 
     \begin{figure}[htbp]
       \begin{center}
-        \includegraphics[width=0.2\textwidth]{filter}
+        \includegraphics[width=0.17\textwidth]{filter}
         \caption{Filter Funktion}
         \label{fig:filter}
       \end{center}
     \end{figure}
     
   % subsubsection filter (end)
-
-  \subsubsection*{Anzeigen von Trip Informationen}
-  \label{ssub:anzeigen_von_trip_informationen}
-    Wenn der Anwender ein Vehicle in der Karte durch Klicken auswählt, öffnet sich ein Fenster, welches Informationen für diesen Trip anzeigt (Abbildung \ref{fig:trip_information}. Neben dem Namen der Route lässt sich im Kreis (hier in Rot) die Routennummer ablesen. Im unteren Bereich sind die Fahrplaninformationen für den Trip gelistet. Neben dem Namen der Station ist auch die Abfahrtzeit des Vehicles gelistet. Die bereits besuchten Stationen werden in einem Grauton dargestellt, um sie als inaktiv zu markieren.
-
-    \begin{figure}[htbp]
-      \begin{center}
-        \includegraphics[width=0.3\textwidth]{trip_information}
-        \caption{Anzeigen von Trip Informationen}
-        \label{fig:trip_information}
-      \end{center}
-    \end{figure}
-    
-  % subsubsection anzeigen_von_trip_informationen (end)
-
-  \subsubsection*{Wechseln der Kartendarstellung}
-  \label{ssub:style_auswahl}
-    Über das \texttt{Switch Style} Element {\Large \inlinegraphics{switch_styles_symbol}} hat der Anwender die Möglichkeit, zwischen verschiedenen Darstellungsarten der Karte zu wechseln. Auch die Polylines der Routen lassen sich zusätzlich über das Anwählen von \texttt{Shape} ein- oder ausblenden. Standardmäßig ist \texttt{Dark} ausgewählt.
-
-    \begin{figure}[htbp]
-      \begin{center}
-        \includegraphics[width=0.14\textwidth]{switch_styles}
-        \caption{Wechseln zwischen verschiedenen Kartendarstellung}
-        \label{fig:switch_styles}
-      \end{center}
-    \end{figure}
-    
-  % subsubsection style_auswahl (end)
 
   \subsubsection*{Wegfindung}
   \label{ssub:wegfindung}

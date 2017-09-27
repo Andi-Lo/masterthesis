@@ -10,13 +10,13 @@
      \end{center}
    \end{figure}
    
-  Vor allem die Abfrage von aktiven Trips aus der Datenbank, stellte ein großes Problem dar. Die Datenbank konnte die Anfragen des Clients nicht effizient genug verarbeiten. An dieser Stelle stand fest, dass für die weitere Arbeit umfassende Optimierungen der Datenbank erfolgen müssen, um eine responsive Webanwendung zu ermöglichen. 
+  Vor allem die Abfrage von aktiven Trips aus der Datenbank stellte ein großes Problem dar. Die Datenbank konnte die Anfragen des Clients nicht effizient genug verarbeiten. An dieser Stelle stand fest, dass für die weitere Arbeit umfassende Optimierungen der Datenbank erfolgen müssen, um eine responsive Webanwendung zu ermöglichen. 
 
-  \subsubsection{GTFS Optimierungen}
+  \subsubsection{GTFS-Optimierungen}
   \label{ssub:gtfs_optimierungen}
-    Durch eine Optimierung des GTFS Feeds lässt sich die Datenmenge bereits vor dem Importieren in die Datenbank erheblich verringern. Ein entsprechendes Tool hierfür ist \texttt{gtfstidy} \url{https://github.com/patrickbr/gtfstidy}. Es bietet allerdings nicht nur die Möglichkeit für die Vereinfachung von Polylines, sondern liefert eine ganze Reihe weiterer Optimierungsmöglichkeiten. 
+    Durch eine Optimierung des GTFS-Feeds lässt sich die Datenmenge bereits vor dem Importieren in die Datenbank erheblich verringern. Ein entsprechendes Tool hierfür ist \texttt{gtfstidy} \url{https://github.com/patrickbr/gtfstidy}. Es bietet allerdings nicht nur die Möglichkeit für die Vereinfachung von Polylines, sondern liefert eine ganze Reihe weiterer Optimierungsmöglichkeiten. 
 
-    Der Kommandozeilenbefehl \colorbox{materialGrey}{\texttt{\color{white}{\$ gtfstidy -sSiRDeO input.zip output}}} optimiert das Stuttgart-VVS Feed wie folgt:
+    Der Kommandozeilenbefehl \colorbox{materialGrey}{\texttt{\color{white}{\$ gtfstidy -sSiRDeO input.zip output}}} optimiert das Stuttgart-VVS-Feed wie folgt:
     
     \begin{itemize}[label={}]
       \item \textbf{-s} reduziert die Punktanzahl einer Polyline.
@@ -38,7 +38,7 @@
 
     \begin{longtable}{|>{\raggedright \arraybackslash}p{5.0cm}|>{\raggedright \arraybackslash}p{4.0cm}|>{\raggedright \arraybackslash}p{4.0cm}|}
       \hline
-      Dateiname & Größe davor& Größe danach\\
+      Dateiname & Größe davor & Größe danach\\
       \hline
       {\small trips.txt}           & {\small 6 MB    } & {\small 2.8 MB  }\\
       {\small stop\_times.txt}     & {\small 103 MB  } & {\small 53 MB   }\\
@@ -47,7 +47,7 @@
       {\small routes.txt}          & {\small 54 KB   } & {\small 38 KB   }\\
       {\small calendar\_dates.txt} & {\small 557 KB  } & {\small 463 KB  }\\
       \hline
-      \caption{Tabellengröße bevor und nach anwenden von gtfstidy}
+      \caption{Tabellengröße vor und nach der Anwendung von gtfstidy}
       \label{tbl:gtfs_tidy_results}
     \end{longtable}
 
@@ -57,10 +57,28 @@
 
   \subsubsection{Denormalisierung der Datenbank}
   \label{ssub:denormalisierung_der_datenbank}
-    Die Denormalisierung ist eine Strategie, die auf eine zuvor normalisierte Datenbank angewendet wird, um die Leistung zu erhöhen. Die Denormalisierung ist der Prozess, bei dem versucht wird, die Leseperformance einer Datenbank zu verbessern. Durch das Hinzufügen redundanter Kopien von Daten oder deren Gruppierung wird die Schreibleistung verringert.\parencite{sanders}
+    Um an die Daten der aktiven Trips zu gelangen, müssen alle relevanten Tabellen mittels SQL \texttt{JOIN} über eine SQL-Abfrage\footnotemark miteinander verknüpft werden. Die Verknüpfung erfolgt durch die Verbindung der einzelnen Reihen zweier Tabellen (TabelleA und TabelleB) gegen eine Verknüpfungsbedingung. Das Resultat ist eine neue Ergebnistabelle mit den Inhalten der kombinierten Reihen. Solche Verknüpfungen sind besonders dann zeitintensiv, wenn eine große Menge an Daten (siehe Tabelle: \ref{table:table_metrics}) kombiniert werden müssen.
+
+    \footnotetext{Die dazugehörige SQL-Abfrage ist aufgrund seiner Länge im Anhang unter Listing \ref{lst:get_active_trips_query} zu finden.}   
+
+    \begin{longtable}{|>{\raggedright \arraybackslash}p{5.0cm}|>{\raggedright \arraybackslash}p{5.0cm}|>{\raggedright \arraybackslash}p{5.0cm}|}
+    \caption{Tabellen Metriken} \label{table:table_metrics}\\
+      \hline
+      Tabellen Name & Anzahl Reihen\\
+      \hline
+      trips.txt & 71,000\\
+      stop\_times.txt & 1,3000,000\\
+      stops.txt & 7,900\\
+      shapes.txt & 1,085,860\\
+      \hline
+    \end{longtable}
+    
+    Sollen alle Trips in einem Zeitraum von 1 - 15 Minuten gefunden werden, sind bereits Rechenzeiten entstanden, die aufgrund ihrer langen Laufzeit abgebrochen werden mussten. In mehreren Iterationen wurde versucht, die SQL-Abfrage zu optimieren, was allerdings keine Verbesserung herbeiführte. Es sind zu viele JOIN Verknüpfungen und WHERE Bedingungen in dieser Abfrage, als dass sich eine performante Lösung damit finden ließe. Es musste ein neuer Ansatz gefunden werden, um die Abfragezeiten erheblich zu verringern.\\
+
+    Die Denormalisierung ist eine Strategie, die auf eine zuvor normalisierte Datenbank angewendet wird, um die Leistung zu erhöhen. Dabei wird versucht, die Leseperformance einer Datenbank zu verbessern, indem redundante Kopien von Daten hinzugefügt oder Daten gruppiert werden. Damit wird zwar die Schreibleistung verringert, die Lesegeschwindigkeit jedoch beschleunigt.\parencite{sanders}
     Da die Daten ausschließlich ausgelesen und nicht geschrieben werden, ergeben sich nur Vorteile.\\
 
-    Um diese Methode anwenden zu können, wird eine neue Tabelle generiert, die den Zugriff auf die benötigten Daten vereinfacht. Im Grunde handelt es sich um eine Vorberechnung. Anstatt die Tabellen bei jeder Anfrage an den Server aufwendig über viele \texttt{SQL-JOINS} zu verknüpfen, wird diese Verknüpfung einmalig vorberechnet und in einer Tabelle gespeichert. Die Denormalisierung  einer Tabelle wurde bereits im vorherigen Abschnitt "`\nameref{ssub:aggregieren_der_shape_tabelle}"' aufgezeigt. Dadurch ließ sich die Polyline über eine einzige Tabellenreihe abfragen, was die Performance signifikant erhöhte. Zum besseren Verständnis der Denormalisierungsmethode soll folgende Abbildung dienen:
+    Um diese Methode anwenden zu können, wird eine neue Tabelle generiert, die den Zugriff auf die benötigten Daten vereinfacht. Im Grunde handelt es sich um eine Vorberechnung. Anstatt die Tabellen bei jeder Anfrage an den Server aufwändig über viele \texttt{SQL-JOINS} zu verknüpfen, wird diese Verknüpfung einmalig vorberechnet und in einer Tabelle gespeichert. Die Denormalisierung einer Tabelle wurde bereits im vorherigen Abschnitt "`\nameref{ssub:aggregieren_der_shape_tabelle}"' aufgezeigt. Dadurch ließ sich die Polyline über eine einzige Tabellenreihe abfragen, was die Performance signifikant erhöhte. Zum besseren Verständnis der Denormalisierungsmethode soll folgende Abbildung dienen:
 
     \begin{figure}[htbp]
       \begin{center}
@@ -85,14 +103,14 @@
     \begin{figure}[htbp]
       \begin{center}
         \includegraphics[width=\textwidth]{denormalized_tables.png}
-        \caption{Auszug aus der \texttt{denormalized\_trips} Tabelle}
+        \caption{Auszug aus der \texttt{denormalized\_trips}-Tabelle}
         \label{fig:denormalized_table}
       \end{center}
     \end{figure}  
 
     \subsubsection*{Ergebnisse der Denormalisierung}
     \label{ssub:ergebnisse_der_denormalisierung}
-      Für die Visualisierung ist eine Abfrage der aktiven Trips am wichtigsten, da diese die Daten für die Darstellung der Vehicle auf der Karte liefert. Wie in Abbildung \ref{fig:denormalizing_results} zu sehen ist, wird auf die \texttt{denormalized\_trips}, \texttt{denormalized\_shapes} und die \texttt{calendar\_dates} Tabelle zugegriffen. Dabei werden die einzelnen Tabellen über die \texttt{shape\_id} und \texttt{service\_id} miteinander verknüpft. Das Resultat ist die Ausgabe aller aktiven Trips in einem variabel definierbarem Zeitraum des aktuellen Datums.
+      Für die Visualisierung ist eine Abfrage der aktiven Trips am wichtigsten, da diese die Daten für die Darstellung der Vehicle auf der Karte liefert. Wie in Abbildung \ref{fig:denormalizing_results} zu sehen ist, wird auf die \texttt{denormalized\_trips}-, \texttt{denormalized\_shapes}- und die \texttt{calendar\_dates}-Tabellen zugegriffen. Dabei werden die einzelnen Tabellen über die \texttt{shape\_id} und \texttt{service\_id} miteinander verknüpft. Das Resultat ist die Ausgabe aller aktiven Trips in einem variabel definierbarem Zeitraum des aktuellen Datums.
 
       \begin{figure}[htbp]
         \begin{center}
@@ -129,7 +147,7 @@
 
       \pagebreak
       
-      Abbildung \ref{fig:query_time_chart} zeigt einen Plot der Query-Zeit aus Tabelle \ref{tbl:evaluierung_der_denormalisierung} als linearen Graphen. Daraus ist ersichtlich, dass die Antwortzeit der Datenbank linear mit dem abgefragten Zeitraum wächst. Für die Visualisierung sind vor allem zwei Abfragen wichtig: Erstens das Abfragen eines größeren Zeitraums von 1-2 Stunden. Dies geschieht beim ersten Aufrufen der Webanwendung wenn die Karte noch keine Trips besitzt und damit leer ist. Zweitens die Abfrage von kleinen Zeiträumen von nur einer Minute, um neue Trips abzufragen. Für diese zwei Abfragen bewegt sich die Antwortzeit des Servers zwischen $\approx 80 -  160\; ms$. Damit wurde das in Kapitel \ref{sub:zielsetzung} gesetzte Ziel von 0 bis $200ms$ bereits erreicht.
+      Abbildung \ref{fig:query_time_chart} zeigt einen Plot der Query-Zeit aus Tabelle \ref{tbl:evaluierung_der_denormalisierung} als linearen Graphen. Daraus ist ersichtlich, dass die Antwortzeit der Datenbank linear mit dem abgefragten Zeitraum wächst. Für die Visualisierung sind vor allem zwei Abfragen wichtig: Erstens das Abfragen eines größeren Zeitraums von 1-2 Stunden. Dies geschieht beim ersten Aufrufen der Webanwendung wenn die Karte noch keine Trips besitzt und damit leer ist. Zweitens die Abfrage von kleinen Zeiträumen von nur einer Minute, um neue Trips abzufragen. Für diese zwei Abfragen bewegt sich die Antwortzeit des Servers zwischen $\approx 80 - 160\; ms$. Damit wurde das in Kapitel \ref{sub:zielsetzung} gesetzte Ziel von 0 bis $200ms$ bereits erreicht.
       
     % subsubsection ssub:ergebnisse_der_denormalisierung (end)
   % subsubsection denormalisierung_der_datenbank (end)

@@ -1,5 +1,4 @@
-Paragraph:
+# Abstract
 
-Vehicle Movement position on network maps
-
-In der Arbeit geht es darum, zu analysieren, inwiefern sich Daten der modernen Stadt (smart city) verwenden lassen, um die User Experience des Endnutzers im Mobilitätsbereich zu erhöhen. Konkretisiert geht es dabei um die visuelle Darstellung von Nahverkehrsdaten in Echtzeit im öffentlichen Raum. Ich werde umfassend recherchieren, mit welchen Technologien ein solches Softwaresystem umzusetzen ist und bewerte diese hinsichtlich ihrer Effizienz. Des weiteren sollen anhand eines Prototyps verschiedene Arten der Visualisierung beleuchtet und dadurch eine Evaluation der verschiedenen Vor- und Nachteile ermöglicht werden.
+In einer Zeit, in der Städte aufgrund von zunehmendem Individualverkehr und damit einhergehender Umweltverschmutzung mehr und mehr an ihre Grenzen stoßen, wird die Verbesserung der Öffentlichen Verkehrsinfrastruktur immer wichtiger. Die Visualisierung von Daten des Öffentlichen Nahverkehrs kann hierbei einen Beitrag leisten, indem sie bspw. Pendlern und Reisenden als anschauliche Informationsquelle oder Städteplanern und Verkehrsunternehmen als Analyseinstrument und Planungsgrundlage dient. 
+  Im Rahmen dieser Arbeit wurde ein Ansatz zur Visualisierung von Nahverkehrsdaten im GTFS-Format auf einer interaktiven Karte entwickelt. Das Ergebnis ist eine Live-Karte für den Raum Stuttgart, mit der auf einfache und praktikable Weise die Daten aller Fahrpläne des Verkehrsverbunds einsehbar werden. 
